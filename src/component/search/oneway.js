@@ -1,8 +1,7 @@
 import Inputfield from '../../common/inputfield';
 
 function oneway() {
- return (
-        <div>
+ return (  <div>
         <Inputfield placeholder="Enter origin city"/>
         <Inputfield placeholder="Enter destination city"/>
         <Inputfield placeholder="Enter origin city"/>

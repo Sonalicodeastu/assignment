@@ -1,5 +1,3 @@
-
-
 function inputfield(props) {
     return (
         <div>

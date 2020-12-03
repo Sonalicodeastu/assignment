@@ -9,25 +9,20 @@ function Searchtabs() {
 
 
     return (
-
         <div className="col-4">
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
-          onSelect={(k) => setKey(k)}
-        >
-
+          onSelect={(k) => setKey(k)}>
           <Tab eventKey="oneway" title="oneway">
             <Oneway/>
           </Tab>
           <Tab eventKey="return" title="return">
           <Returnform/>
           </Tab>
-         
         </Tabs>
         <h5>filter</h5>
         </div>
       );
   }
-  
   export default Searchtabs;

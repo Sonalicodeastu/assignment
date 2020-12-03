@@ -1,7 +1,6 @@
 import Inputfield from '../../common/inputfield';
 function returnform() {
-    return (
-        <div>
+    return (<div>
         <Inputfield placeholder="Enter origin city"/>
         <Inputfield placeholder="Enter destination city"/>
         <Inputfield placeholder="Enter origin city"/>
