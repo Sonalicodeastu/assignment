@@ -6,3 +6,22 @@
   width: 100%;
   margin-left: 5px;
 }
+.result-header {
+  border-bottom: 2px solid #dee2e6;
+}
+input[type="date"]:before {
+  content: attr(placeholder) !important;
+  color: #aaa;
+  margin-right: 0.5em;
+}
+input[type="date"]:focus:before,
+input[type="date"]:valid:before {
+  content: "";
+}
+.flex-container {
+  display: flex;
+}
+.flex-container .border {
+  padding: 5px;
+  width: 14%;
+}

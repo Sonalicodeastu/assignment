@@ -9,7 +9,7 @@ function Searchtabs() {
 
 
     return (
-        <div className="col-4">
+        <div>
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
