@@ -6,8 +6,7 @@ const Rangeslider = (props) => {
        max="10000"
        minValue="1000"
        maxValue="5000"
-    //    onChange={(v) => console.log(v)}
-    onChange={props.value}
+       onChange={props.value}
     />;
 }
 export default Rangeslider;
