@@ -1,9 +1,22 @@
-function inputfield(props) {
+ import { Hint } from 'react-autocomplete-hint';
+const inputfield=({
+    val,
+    name,
+    placeholder,
+    handleInputBlur,
+    handleInputChange,
+  })=>{
     return (
-        <div>
-        <input type="text" className="forminput" placeholder={props.placeholder}/>
-    <span></span>
-        </div>
+      <Hint options={["Pune (PNQ)", "Delhi (DEL)", "Bengaluru (BLR)", "Mumbai (BOM)"]}>
+        <input
+        className="input-style"
+        name={name}
+        id={name}
+        value={val}
+        placeholder={placeholder}
+        onChange={handleInputChange}
+        onBlur={handleInputBlur}/>
+        </Hint>
       );
   }
   export default inputfield;
