@@ -3,9 +3,6 @@ const Multisingle = (props) => {
   return (
     <div>
       <div className="border row flex-container">
-        <div>
-          <img src={logo} height="50px" width="50px" alt="icon" />
-        </div>
         <div className="borderbox">
           <div>
             <span>Multiple</span>

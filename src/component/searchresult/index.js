@@ -107,17 +107,17 @@ const Searchresult = (props) => {
     props.filtervalues.maxValue,
     props.filtervalues.minValue,
   ]);
-  const flights = () => {
+  const renderflights = () => {
     return _.map(data, (plane) => {
       return <Flightrow key={plane.flightNo + plane.origin} data={plane} />;
     });
   };
-  const returnflights = () => {
+  const renderreturnflights = () => {
     return _.map(dreturnflight, (plane) => {
       return <Flightrow key={plane.flightNo + plane.origin} data={plane} />;
     });
   };
-  const multiflights = () => {
+  const rendermultiflights = () => {
     let secondf;
     return _.map(firstflight, (plane) => {
       secondf = _.find(secondflight, function (obj) {
@@ -132,7 +132,7 @@ const Searchresult = (props) => {
       );
     });
   };
-  const returnmultiflights = () => {
+  const renderreturnmultiflights = () => {
     let secondf;
     return _.map(freturnflight, (plane) => {
       secondf = _.find(sreturnflight, function (obj) {
@@ -163,13 +163,15 @@ const Searchresult = (props) => {
       </div>
       <div class="resultcontent">
         <div className={props.data.R_Date ? "content-divide" : ""}>
-          <ul className="list-group flightrow">{flights()}</ul>
-          <ul className="list-group flightrow">{multiflights()}</ul>
+          <ul className="list-group flightrow">{renderflights()}</ul>
+          <ul className="list-group flightrow">{rendermultiflights()}</ul>
         </div>
         {props.data.R_Date ? (
           <div className="content-divide">
-            <ul className="list-group flightrow">{returnflights()}</ul>
-            <ul className="list-group flightrow">{returnmultiflights()}</ul>
+            <ul className="list-group flightrow">{renderreturnflights()}</ul>
+            <ul className="list-group flightrow">
+              {renderreturnmultiflights()}
+            </ul>
           </div>
         ) : (
           ""

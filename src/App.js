@@ -8,6 +8,11 @@ import InputDate from "./common/inputdate";
 import Inputpassenger from "./common/inputpassenger";
 import Searchresult from "./component/searchresult/index";
 import Rangeslider from "./component/filter/rangeslider";
+import ReactDOM from "react-dom";
+import Favourite from "./component/favourite/favourite";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+//import { Router, Route, Link, browserHistory, IndexRoute } from "react-router";
+
 const App = () => {
   const [inputValues, setInputValues] = useState({
     Origin: "",
@@ -43,87 +48,90 @@ const App = () => {
     });
   };
   return (
-    <div className="App">
-      <div className="header">
-        <h3>Flight Search App</h3>
-      </div>
-      <div className="flex-container">
-        <aside className="search-sidebar">
-          <div className="tabs">
-            <Tabs>
-              <Tab label="Oneway">
-                <form onSubmit={handleSubmit} className="oneway">
-                  <Inputfield
-                    name="Origin"
-                    val={inputValues.Origin}
-                    placeholder="Enter origin city"
-                    handleInputChange={handleInputChange}
-                  />
-                  <br />
-                  <Inputfield
-                    name="Destination"
-                    val={inputValues.Destination}
-                    placeholder="Enter destination city"
-                    handleInputChange={handleInputChange}
-                  />
-                  <br />
-                  <InputDate
-                    name="D_Date"
-                    placeholder="Departure Date"
-                    handleChange={handleChange}
-                  />
-                  <br />
-                  <Inputpassenger
-                    name="count"
-                    placeholder="Number of passenger"
-                    handleInputChange={handleInputChange}
-                  />
-                  <br />
-                </form>
-              </Tab>
-              <Tab label="Returnform">
-                <form onSubmit={handleSubmit} className="returnform">
-                  <Inputfield
-                    name="Origin"
-                    val={inputValues.Origin}
-                    placeholder="Enter origin city"
-                    handleInputChange={handleInputChange}
-                  />
-                  <br />
-                  <Inputfield
-                    name="Destination"
-                    val={inputValues.Destination}
-                    handleInputChange={handleInputChange}
-                    placeholder="Enter destination city"
-                  />
-                  <br />
-                  <InputDate
-                    name="D_Date"
-                    placeholder="Departure Date"
-                    handleChange={handleChange}
-                  />
-                  <br />
-                  <InputDate
-                    name="R_Date"
-                    placeholder="Return Date"
-                    handleChange={handleChange}
-                  />
-                  <br />
-                  <Inputpassenger placeholder="Number of passenger" />
-                  <br />
-                </form>
-              </Tab>
-            </Tabs>
-          </div>
-          <Rangeslider value={pricechange} />
-        </aside>
-        <div className="content">
-          <div>
-            <Searchresult data={inputValues} filtervalues={Values} />
+    <Router>
+      <div className="App">
+        <div className="header">
+          <h3>Flight Search App</h3>
+        </div>
+        <div className="flex-container">
+          <aside className="search-sidebar">
+            <div className="tabs">
+              <Tabs>
+                <Tab label="Oneway">
+                  <form onSubmit={handleSubmit} className="oneway">
+                    <Inputfield
+                      name="Origin"
+                      val={inputValues.Origin}
+                      placeholder="Enter origin city"
+                      handleInputChange={handleInputChange}
+                    />
+                    <br />
+                    <Inputfield
+                      name="Destination"
+                      val={inputValues.Destination}
+                      placeholder="Enter destination city"
+                      handleInputChange={handleInputChange}
+                    />
+                    <br />
+                    <InputDate
+                      name="D_Date"
+                      placeholder="Departure Date"
+                      handleChange={handleChange}
+                    />
+                    <br />
+                    <Inputpassenger
+                      name="count"
+                      placeholder="Number of passenger"
+                      handleInputChange={handleInputChange}
+                    />
+                    <br />
+                  </form>
+                </Tab>
+                <Tab label="Returnform">
+                  <form onSubmit={handleSubmit} className="returnform">
+                    <Inputfield
+                      name="Origin"
+                      val={inputValues.Origin}
+                      placeholder="Enter origin city"
+                      handleInputChange={handleInputChange}
+                    />
+                    <br />
+                    <Inputfield
+                      name="Destination"
+                      val={inputValues.Destination}
+                      handleInputChange={handleInputChange}
+                      placeholder="Enter destination city"
+                    />
+                    <br />
+                    <InputDate
+                      name="D_Date"
+                      placeholder="Departure Date"
+                      handleChange={handleChange}
+                    />
+                    <br />
+                    <InputDate
+                      name="R_Date"
+                      placeholder="Return Date"
+                      handleChange={handleChange}
+                    />
+                    <br />
+                    <Inputpassenger placeholder="Number of passenger" />
+                    <br />
+                  </form>
+                </Tab>
+              </Tabs>
+            </div>
+            <Rangeslider value={pricechange} />
+            <Link to="/favourite">Favourite</Link>
+          </aside>
+          <div className="content">
+            <div>
+              <Searchresult data={inputValues} filtervalues={Values} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Router>
   );
 };
 export default App;

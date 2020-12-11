@@ -10,23 +10,27 @@ const Accordion = ({ children, props, sdata }) => {
   var diff = endTime.diff(startTime, "hours");
   var totalMinutes = endTime.diff(startTime, "minutes");
   var clearMinutes = totalMinutes % 60;
+  const favourite = () => {
+    var newArray = [JSON.parse(window.sessionStorage.getItem("fav"))];
+    newArray.push(props);
+    sessionStorage.setItem("fav", JSON.stringify(newArray));
+  };
+  const clear = () => {
+    sessionStorage.clear();
+  };
   if (diff > 0) {
     return (
       <div className="accordion-wrapper">
-        <div
-          className={`accordion-title ${isOpen ? "open" : ""}`}
-          onClick={() => setOpen(!isOpen)}
-        >
+        <div className={`accordion-title ${isOpen ? "open" : ""}`}>
           <div className="row flex-container">
-            <div className="borderbox">
-              <img src={logo} height="50px" width="50px" alt="icon" />
-            </div>
             <div className="borderbox">
               <div>
                 <span>Multiple</span>
               </div>
               <div>
-                <a href="#">Show details</a>
+                <a href="#" onClick={() => setOpen(!isOpen)}>
+                  Show details
+                </a>
               </div>
             </div>
             <div className="borderbox">
@@ -47,7 +51,12 @@ const Accordion = ({ children, props, sdata }) => {
               <strong>Rs.{props.data.price + sdata.price}</strong>
             </div>
             <div className="borderbox">
-              <button className="booking">Book</button>
+              <button className="booking" onClick={clear}>
+                clear
+              </button>
+              <button className="favourite" onClick={favourite}>
+                Favourite
+              </button>
             </div>
           </div>
         </div>
