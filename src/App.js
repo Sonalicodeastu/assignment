@@ -51,7 +51,7 @@ const App = () => {
     <Router>
       <div className="App">
         <div className="header">
-          <h3>Flight Search App</h3>
+          <h2 className="filter">Flight Search App</h2>
         </div>
         <div className="flex-container">
           <aside className="search-sidebar">
@@ -121,8 +121,9 @@ const App = () => {
                 </Tab>
               </Tabs>
             </div>
+            <h4 className="filter">Price Filter</h4>
             <Rangeslider value={pricechange} />
-            <Link to="/favourite">Favourite</Link>
+            {/* <Link to="/favourite">Favourite</Link> */}
           </aside>
           <div className="content">
             <div>
@@ -130,6 +131,7 @@ const App = () => {
             </div>
           </div>
         </div>
+        <Favourite />
       </div>
     </Router>
   );

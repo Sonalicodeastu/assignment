@@ -1,21 +1,10 @@
-import logo from "../images.png";
-const Flightrow = (props) => {
-  const favourite = () => {
-    let newArray = JSON.parse(sessionStorage.getItem("dfav"));
-    newArray = newArray ? newArray : [];
-    newArray = [...newArray, props];
-    sessionStorage.setItem("dfav", JSON.stringify(newArray));
-    console.log(sessionStorage.getItem("dfav"));
-  };
+const Favdirectrow = (props) => {
   const clear = () => {
     sessionStorage.clear();
   };
   return (
     <div className="row flex-container">
       <div className="row-border">
-        <div className="borderbox">
-          <img src={logo} alt="flight" height="60px" width="60px" />
-        </div>
         <div className="borderbox">
           <div>{props.data.name}</div>
           <div>{props.data.flightNo}</div>
@@ -43,12 +32,9 @@ const Flightrow = (props) => {
           <button className="booking" onClick={clear}>
             clear
           </button>
-          <button className="favourite" onClick={favourite}>
-            Favourite
-          </button>
         </div>
       </div>
     </div>
   );
 };
-export default Flightrow;
+export default Favdirectrow;

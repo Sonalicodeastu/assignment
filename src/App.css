@@ -33,6 +33,9 @@ button.booking {
   box-shadow: 2px 2px 2px #9e9e9e;
   margin: 5px;
 }
+.filter {
+  text-align: center;
+}
 button.favourite {
   color: white;
   background: #ff8416;
@@ -180,6 +183,8 @@ body {
 }
 .row-border {
   display: flex;
-  margin: 3px;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 3px;
   box-shadow: 2px 2px 2px 2px lightgrey;
 }

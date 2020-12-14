@@ -121,7 +121,11 @@ const Searchresult = (props) => {
     let secondf;
     return _.map(firstflight, (plane) => {
       secondf = _.find(secondflight, function (obj) {
-        return obj.origin === plane.destination;
+        return (
+          obj.origin === plane.destination
+          // &&
+          // obj.price + plane.price <= props.filtervalues.maxValue
+        );
       });
       return (
         <Multirow
@@ -156,7 +160,7 @@ const Searchresult = (props) => {
         </h3>
         <h5>
           {" "}
-          {data.length ? data.length + firstflight.length : ""}{" "}
+          {/* {data.length ? data.length + firstflight.length : ""}{" "} */}
           {data.length ? "flights found" : ""}{" "}
           {props.data.D_Date ? props.data.D_Date : ""}
         </h5>

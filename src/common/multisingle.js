@@ -5,10 +5,10 @@ const Multisingle = (props) => {
       <div className="border row flex-container">
         <div className="borderbox">
           <div>
-            <span>Multiple</span>
+            <span>{props.flight.name}</span>
           </div>
           <div>
-            <a href="#">Show details</a>
+            <span>{props.flight.flightNo}</span>
           </div>
         </div>
         <div className="borderbox">

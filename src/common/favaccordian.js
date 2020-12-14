@@ -1,7 +1,6 @@
 import { useState } from "react";
-import logo from "../../images.png";
 import * as moment from "moment";
-const Accordion = ({ children, props, sdata }) => {
+const Favaccordion = ({ children, props, sdata }) => {
   const [isOpen, setOpen] = useState(false);
   let d1 = moment(props.data.departureTime);
   let d2 = moment(sdata.arrivalTime);
@@ -58,9 +57,6 @@ const Accordion = ({ children, props, sdata }) => {
               <button className="booking" onClick={clear}>
                 clear
               </button>
-              <button className="favourite" onClick={addtofavourite}>
-                Favourite
-              </button>
             </div>
           </div>
         </div>
@@ -72,4 +68,4 @@ const Accordion = ({ children, props, sdata }) => {
   }
   return <div></div>;
 };
-export default Accordion;
+export default Favaccordion;
