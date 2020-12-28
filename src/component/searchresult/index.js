@@ -101,6 +101,7 @@ const Searchresult = (props) => {
       ); //second of multiflight return
       setsecondreturnData(secondreturn);
     };
+    console.log(props);
     fetchData();
   }, [
     props.data.Destination,
@@ -128,6 +129,7 @@ const Searchresult = (props) => {
         multitotal = obj.price + plane.price;
         return obj.origin === plane.destination;
       });
+      console.log(secondf);
       if (
         multitotal <= props.filtervalues.maxValue &&
         multitotal >= props.filtervalues.minValue
@@ -149,6 +151,7 @@ const Searchresult = (props) => {
         multitotal = obj.price + plane.price;
         return obj.origin === plane.destination;
       });
+      console.log(secondf);
       if (
         multitotal <= props.filtervalues.maxValue &&
         multitotal >= props.filtervalues.minValue
@@ -178,18 +181,22 @@ const Searchresult = (props) => {
             {props.data.D_Date ? props.data.D_Date : ""}
           </h5>
         </div>
-        <div className="right">
-          <h3>
-            {props.data.Destination} {props.data.Destination ? "to" : ""}{" "}
-            {props.data.Origin}
-          </h3>
-          <h5>
-            {" "}
-            {/* {data.length ? data.length + firstflight.length : ""}{" "} */}
-            {returnflight.length ? "flights found" : ""}{" "}
-            {props.data.R_Date ? props.data.R_Date : ""}
-          </h5>
-        </div>
+        {props.data.R_Date ? (
+          <div className="right">
+            <h3>
+              {props.data.Destination} {props.data.Destination ? "to" : ""}{" "}
+              {props.data.Origin}
+            </h3>
+            <h5>
+              {" "}
+              {/* {data.length ? data.length + firstflight.length : ""}{" "} */}
+              {returnflight.length ? "flights found" : ""}{" "}
+              {props.data.R_Date ? props.data.R_Date : ""}
+            </h5>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
       <div class="resultcontent">
         <div className={props.data.R_Date ? "content-divide" : ""}>
