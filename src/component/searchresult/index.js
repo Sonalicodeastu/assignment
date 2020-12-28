@@ -30,10 +30,11 @@ const Searchresult = (props) => {
         (v) =>
           v.destination.toLowerCase() ===
             props.data.Destination.toLowerCase() ||
-          (v.origin.toLowerCase() === props.data.Origin.toLowerCase() &&
-            v.date === props.data.D_Date &&
-            v.price <= props.filtervalues.maxValue &&
-            v.price >= props.filtervalues.minValue)
+          v.origin.toLowerCase() === props.data.Origin.toLowerCase()
+        // &&
+        //   v.date === props.data.D_Date &&
+        //   v.price <= props.filtervalues.maxValue &&
+        //   v.price >= props.filtervalues.minValue
       ); //direct indirect all
       res = multiresult.filter(
         (v) =>
@@ -49,9 +50,10 @@ const Searchresult = (props) => {
           v.destination.toLowerCase() ===
             props.data.Destination.toLowerCase() ||
           (v.origin.toLowerCase() === props.data.Origin.toLowerCase() &&
-            v.date === props.data.D_Date &&
-            v.price <= props.filtervalues.maxValue &&
-            v.price >= props.filtervalues.minValue)
+            v.date === props.data.D_Date)
+        // &&
+        // v.price <= props.filtervalues.maxValue &&
+        // v.price >= props.filtervalues.minValue
       ); //all indirect
       first_m = multires.filter(
         (v) =>
@@ -71,9 +73,10 @@ const Searchresult = (props) => {
         (v) =>
           v.destination.toLowerCase() === props.data.Origin.toLowerCase() ||
           (v.origin.toLowerCase() === props.data.Destination.toLowerCase() &&
-            v.date === props.data.R_Date &&
-            v.price <= props.filtervalues.maxValue &&
-            v.price >= props.filtervalues.minValue)
+            v.date === props.data.R_Date)
+        // &&
+        // v.price <= props.filtervalues.maxValue &&
+        // v.price >= props.filtervalues.minValue
       ); //direct indirect all
       setreturnData(returnall);
       directreturn = returnall.filter(
@@ -119,51 +122,74 @@ const Searchresult = (props) => {
   };
   const rendermultiflights = () => {
     let secondf;
+    let multitotal;
     return _.map(firstflight, (plane) => {
       secondf = _.find(secondflight, function (obj) {
-        return (
-          obj.origin === plane.destination
-          // &&
-          // obj.price + plane.price <= props.filtervalues.maxValue
-        );
+        multitotal = obj.price + plane.price;
+        return obj.origin === plane.destination;
       });
-      return (
-        <Multirow
-          key={plane.flightNo + plane.origin}
-          data={plane}
-          sdata={secondf}
-        />
-      );
+      if (
+        multitotal <= props.filtervalues.maxValue &&
+        multitotal >= props.filtervalues.minValue
+      ) {
+        return (
+          <Multirow
+            key={plane.flightNo + plane.origin}
+            data={plane}
+            sdata={secondf}
+          />
+        );
+      }
     });
   };
   const renderreturnmultiflights = () => {
-    let secondf;
+    let secondf, multitotal;
     return _.map(freturnflight, (plane) => {
       secondf = _.find(sreturnflight, function (obj) {
+        multitotal = obj.price + plane.price;
         return obj.origin === plane.destination;
       });
-      return (
-        <Multirow
-          key={plane.flightNo + plane.origin}
-          data={plane}
-          sdata={secondf}
-        />
-      );
+      if (
+        multitotal <= props.filtervalues.maxValue &&
+        multitotal >= props.filtervalues.minValue
+      ) {
+        return (
+          <Multirow
+            key={plane.flightNo + plane.origin}
+            data={plane}
+            sdata={secondf}
+          />
+        );
+      }
     });
   };
   return (
     <div>
       <div className="result-header">
-        <h3>
-          {props.data.Origin} {props.data.Origin ? "to" : ""}{" "}
-          {props.data.Destination}
-        </h3>
-        <h5>
-          {" "}
-          {/* {data.length ? data.length + firstflight.length : ""}{" "} */}
-          {data.length ? "flights found" : ""}{" "}
-          {props.data.D_Date ? props.data.D_Date : ""}
-        </h5>
+        <div className="left">
+          <h3>
+            {props.data.Origin} {props.data.Origin ? "to" : ""}{" "}
+            {props.data.Destination}
+          </h3>
+          <h5>
+            {" "}
+            {/* {data.length ? data.length + firstflight.length : ""}{" "} */}
+            {data.length ? "flights found" : ""}{" "}
+            {props.data.D_Date ? props.data.D_Date : ""}
+          </h5>
+        </div>
+        <div className="right">
+          <h3>
+            {props.data.Destination} {props.data.Destination ? "to" : ""}{" "}
+            {props.data.Origin}
+          </h3>
+          <h5>
+            {" "}
+            {/* {data.length ? data.length + firstflight.length : ""}{" "} */}
+            {returnflight.length ? "flights found" : ""}{" "}
+            {props.data.R_Date ? props.data.R_Date : ""}
+          </h5>
+        </div>
       </div>
       <div class="resultcontent">
         <div className={props.data.R_Date ? "content-divide" : ""}>

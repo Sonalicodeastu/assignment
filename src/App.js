@@ -22,7 +22,7 @@ const App = () => {
     count: "",
   });
   const [Values, setValues] = useState({
-    maxValue: 10000,
+    maxValue: 5000,
     minValue: 0,
   });
   const [formValues, setformValues] = useState({
