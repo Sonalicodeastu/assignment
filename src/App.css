@@ -62,6 +62,9 @@ button.favourite {
 .content-divide {
   flex-grow: 3;
 }
+img.flight {
+  transform: rotate(180deg);
+}
 .resultcontent {
   display: flex;
 }

@@ -1,4 +1,4 @@
-import logo from "../images.png";
+import logo from "../flight.png";
 const Flightrow = (props) => {
   const favourite = () => {
     let newArray = JSON.parse(sessionStorage.getItem("dfav"));
@@ -14,7 +14,13 @@ const Flightrow = (props) => {
     <div className="row flex-container">
       <div className="row-border">
         <div className="borderbox">
-          <img src={logo} alt="flight" height="60px" width="60px" />
+          <img
+            className="flight"
+            src={logo}
+            alt="flight"
+            height="60px"
+            width="60px"
+          />
         </div>
         <div className="borderbox">
           <div>{props.data.name}</div>

@@ -31,10 +31,6 @@ const Searchresult = (props) => {
           v.destination.toLowerCase() ===
             props.data.Destination.toLowerCase() ||
           v.origin.toLowerCase() === props.data.Origin.toLowerCase()
-        // &&
-        //   v.date === props.data.D_Date &&
-        //   v.price <= props.filtervalues.maxValue &&
-        //   v.price >= props.filtervalues.minValue
       ); //direct indirect all
       res = multiresult.filter(
         (v) =>
@@ -51,9 +47,6 @@ const Searchresult = (props) => {
             props.data.Destination.toLowerCase() ||
           (v.origin.toLowerCase() === props.data.Origin.toLowerCase() &&
             v.date === props.data.D_Date)
-        // &&
-        // v.price <= props.filtervalues.maxValue &&
-        // v.price >= props.filtervalues.minValue
       ); //all indirect
       first_m = multires.filter(
         (v) =>
@@ -74,9 +67,6 @@ const Searchresult = (props) => {
           v.destination.toLowerCase() === props.data.Origin.toLowerCase() ||
           (v.origin.toLowerCase() === props.data.Destination.toLowerCase() &&
             v.date === props.data.R_Date)
-        // &&
-        // v.price <= props.filtervalues.maxValue &&
-        // v.price >= props.filtervalues.minValue
       ); //direct indirect all
       setreturnData(returnall);
       directreturn = returnall.filter(
@@ -101,7 +91,6 @@ const Searchresult = (props) => {
       ); //second of multiflight return
       setsecondreturnData(secondreturn);
     };
-    console.log(props);
     fetchData();
   }, [
     props.data.Destination,
@@ -129,7 +118,6 @@ const Searchresult = (props) => {
         multitotal = obj.price + plane.price;
         return obj.origin === plane.destination;
       });
-      console.log(secondf);
       if (
         multitotal <= props.filtervalues.maxValue &&
         multitotal >= props.filtervalues.minValue
@@ -151,7 +139,6 @@ const Searchresult = (props) => {
         multitotal = obj.price + plane.price;
         return obj.origin === plane.destination;
       });
-      console.log(secondf);
       if (
         multitotal <= props.filtervalues.maxValue &&
         multitotal >= props.filtervalues.minValue
@@ -175,8 +162,6 @@ const Searchresult = (props) => {
             {props.data.Destination}
           </h3>
           <h5>
-            {" "}
-            {/* {data.length ? data.length + firstflight.length : ""}{" "} */}
             {data.length ? "flights found" : ""}{" "}
             {props.data.D_Date ? props.data.D_Date : ""}
           </h5>
@@ -188,8 +173,6 @@ const Searchresult = (props) => {
               {props.data.Origin}
             </h3>
             <h5>
-              {" "}
-              {/* {data.length ? data.length + firstflight.length : ""}{" "} */}
               {returnflight.length ? "flights found" : ""}{" "}
               {props.data.R_Date ? props.data.R_Date : ""}
             </h5>

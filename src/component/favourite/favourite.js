@@ -7,7 +7,6 @@ class Favourite extends Component {
   render() {
     const renderfavflights = () => {
       let data = JSON.parse(sessionStorage.getItem("dfav"));
-      console.log([JSON.parse(sessionStorage.getItem("dfav"))]);
       return _.map(data, (plane) => {
         return (
           <Favdirectrow
@@ -19,7 +18,6 @@ class Favourite extends Component {
     };
     const renderfavmultiflights = () => {
       let multi = JSON.parse(window.sessionStorage.getItem("fav"));
-      console.log(multi);
       return _.map(multi, (plane) => {
         return (
           <Favmulti

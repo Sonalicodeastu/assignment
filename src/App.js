@@ -123,7 +123,6 @@ const App = () => {
             </div>
             <h4 className="filter">Price Filter</h4>
             <Rangeslider value={pricechange} />
-            {/* <Link to="/favourite">Favourite</Link> */}
           </aside>
           <div className="content">
             <div>
