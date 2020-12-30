@@ -17,18 +17,17 @@ const App = () => {
   const [inputValues, setInputValues] = useState({
     origin: "",
     destination: "",
-    d_Date: "",
-    r_Date: "",
+    departuredate: "",
+    returndate: "",
     count: "",
   });
   const [Values, setValues] = useState({
     maxValue: 5000,
     minValue: 0,
   });
-  const [activetab, setactivcetab] = useState({ oneway: "true" });
+  const [activeTab, setActiveTab] = useState({ oneway: "true" });
   const [formValues, setformValues] = useState({ hits: [] });
-  const [formsubmit, setFormsubmit] = useState(false);
-  useEffect(() => {}, [activetab, formValues]);
+  const [formSubmit, setFormSubmit] = useState(false);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setInputValues({ ...inputValues, [name]: value });
@@ -38,27 +37,29 @@ const App = () => {
     const dateChanged = value.split("-").join("/");
     setInputValues({ ...inputValues, [name]: dateChanged });
   };
-  const activetabhandler = (btn) => {
+  const activeTabHandler = (btn) => {
     const name = btn;
-    setactivcetab({ [name]: "true" });
+    setActiveTab({ [name]: "true" });
   };
   const returnenabled = () => {
-    const { origin, destination, d_Date, r_Date, count } = inputValues;
-    return activetab.oneway
-      ? !_.isEmpty(origin) &&
-          !_.isEmpty(destination) &&
-          !_.isEmpty(d_Date) &&
-          !_.isEmpty(count)
-      : !_.isEmpty(origin) &&
-          !_.isEmpty(destination) &&
-          !_.isEmpty(d_Date) &&
-          !_.isEmpty(r_Date) &&
-          !_.isEmpty(count);
+    const {
+      origin,
+      destination,
+      departuredate,
+      returndate,
+      count,
+    } = inputValues;
+    const oneway =
+      !_.isEmpty(origin) &&
+      !_.isEmpty(destination) &&
+      !_.isEmpty(departuredate) &&
+      !_.isEmpty(count);
+    return activeTab.oneway ? oneway : oneway && !_.isEmpty(returndate);
   };
   const handlereturnSubmit = (event) => {
     event.preventDefault();
     setformValues({ ...inputValues });
-    setFormsubmit(true);
+    setFormSubmit(true);
   };
   const pricechange = (value) => {
     setValues({
@@ -78,14 +79,14 @@ const App = () => {
           <aside className="search-sidebar">
             <div className="tabs">
               <button
-                className={activetab.oneway ? "active tab" : "tab false"}
-                onClick={() => activetabhandler("oneway")}
+                className={activeTab.oneway ? "active tab" : "tab false"}
+                onClick={() => activeTabHandler("oneway")}
               >
                 Oneway
               </button>
               <button
-                className={activetab.ret ? "active tab" : "tab false"}
-                onClick={() => activetabhandler("ret")}
+                className={activeTab.return ? "active tab" : "tab false"}
+                onClick={() => activeTabHandler("return")}
               >
                 Return
               </button>
@@ -106,14 +107,14 @@ const App = () => {
                 />
                 <br />
                 <InputDate
-                  name="d_Date"
+                  name="departuredate"
                   placeholder="Departure Date"
                   handleChange={handleChange}
                 />
                 <br />
-                {activetab.ret ? (
+                {activeTab.return ? (
                   <InputDate
-                    name="r_Date"
+                    name="returndate"
                     placeholder="Return Date"
                     handleChange={handleChange}
                   />
@@ -127,7 +128,7 @@ const App = () => {
                   handleInputChange={handleInputChange}
                   placeholder="Number of passenger"
                 />
-                <br />
+
                 <button className="return" disabled={!returnenabled()}>
                   Search
                 </button>
@@ -138,7 +139,7 @@ const App = () => {
           </aside>
           <div className="content">
             <div>
-              {formsubmit ? (
+              {formSubmit ? (
                 <Searchresult data={formValues} filtervalues={Values} />
               ) : (
                 ""

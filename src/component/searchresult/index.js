@@ -26,7 +26,6 @@ const Searchresult = (props) => {
       let directreturn = {};
       let firstreturn = {};
       let secondreturn = {};
-      console.log(props);
       multiresult = result.data.filter(
         (v) =>
           v.destination.toLowerCase() ===
@@ -38,7 +37,7 @@ const Searchresult = (props) => {
           v.destination.toLowerCase() ===
             props.data.destination.toLowerCase() &&
           v.origin.toLowerCase() === props.data.origin.toLowerCase() &&
-          v.date === props.data.d_Date &&
+          v.date === props.data.departuredate &&
           v.price <= props.filtervalues.maxValue &&
           v.price >= props.filtervalues.minValue
       ); //direct flights
@@ -47,7 +46,7 @@ const Searchresult = (props) => {
           v.destination.toLowerCase() ===
             props.data.destination.toLowerCase() ||
           (v.origin.toLowerCase() === props.data.origin.toLowerCase() &&
-            v.date === props.data.d_Date)
+            v.date === props.data.departuredate)
       ); //all indirect
       first_m = multires.filter(
         (v) =>
@@ -67,14 +66,14 @@ const Searchresult = (props) => {
         (v) =>
           v.destination.toLowerCase() === props.data.origin.toLowerCase() ||
           (v.origin.toLowerCase() === props.data.destination.toLowerCase() &&
-            v.date === props.data.R_Date)
+            v.date === props.data.returnDate)
       ); //direct indirect all
       setreturnData(returnall);
       directreturn = returnall.filter(
         (v) =>
           v.destination.toLowerCase() === props.data.origin.toLowerCase() &&
           v.origin.toLowerCase() === props.data.destination.toLowerCase() &&
-          v.date === props.data.r_Date &&
+          v.date === props.data.returndate &&
           v.price <= props.filtervalues.maxValue &&
           v.price >= props.filtervalues.minValue
       ); //direct flights
@@ -96,8 +95,8 @@ const Searchresult = (props) => {
   }, [
     props.data.destination,
     props.data.origin,
-    props.data.d_Date,
-    props.data.r_Date,
+    props.data.departuredate,
+    props.data.returndate,
     props.filtervalues.maxValue,
     props.filtervalues.minValue,
   ]);
@@ -164,7 +163,7 @@ const Searchresult = (props) => {
           </h3>
           <h5>
             {data.length ? "flights found" : ""}{" "}
-            {props.data.d_Date ? props.data.d_Date : ""}
+            {props.data.departuredate ? props.data.departuredate : ""}
           </h5>
         </div>
         {props.data.r_Date ? (
@@ -175,7 +174,7 @@ const Searchresult = (props) => {
             </h3>
             <h5>
               {returnflight.length ? "flights found" : ""}{" "}
-              {props.data.r_Date ? props.data.r_Date : ""}
+              {props.data.returndate ? props.data.returndate : ""}
             </h5>
           </div>
         ) : (
