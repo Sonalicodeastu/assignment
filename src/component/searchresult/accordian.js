@@ -3,8 +3,9 @@ import logo from "../../images.png";
 import * as moment from "moment";
 const Accordion = ({ children, props, sdata }) => {
   const [isOpen, setOpen] = useState(false);
-  let d1 = moment(props.data.departureTime);
-  let d2 = moment(sdata.arrivalTime);
+  // let departuretime = moment(props.data.departureTime);
+  // console.log(props);
+  // let arrivalTime = moment(props.sdata.arrivalTime);
   let startTime = moment(props.data.departureTime, "hh:mm:ss");
   let endTime = moment(sdata.arrivalTime, "hh:mm:ss");
   let diff = endTime.diff(startTime, "hours");
