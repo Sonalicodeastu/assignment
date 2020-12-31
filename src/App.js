@@ -32,7 +32,6 @@ const App = () => {
     maxValue: 5000,
     minValue: 0,
   });
-
   const [activeTab, setActiveTab] = useState({ oneway: "true" });
   const [formValues, setformValues] = useState();
   const [formSubmit, setFormSubmit] = useState(false);
@@ -103,7 +102,6 @@ const App = () => {
               >
                 Return
               </button>
-
               <form onSubmit={handlereturnSubmit} className="returnform">
                 <Select options={cities} onChange={handleselectchange} />
                 <br />
@@ -124,14 +122,12 @@ const App = () => {
                 ) : (
                   ""
                 )}
-
                 <br />
                 <Inputpassenger
                   name="count"
                   handleInputChange={handleInputChange}
                   placeholder="Number of passenger"
                 />
-
                 <button className="return" disabled={!returnenabled()}>
                   Search
                 </button>
