@@ -3,7 +3,9 @@ import React from "react";
 import Tabs from "./component/search/tabs/tabs";
 import Tab from "./component/search/tabs/tab";
 import { useState, useEffect } from "react";
-import Inputfield from "./common/inputfield";
+import Select from "react-select";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import InputDate from "./common/inputdate";
 import Inputpassenger from "./common/inputpassenger";
 import Searchresult from "./component/searchresult/index";
@@ -12,7 +14,12 @@ import ReactDOM from "react-dom";
 import Favourite from "./component/favourite/favourite";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import _ from "lodash";
-
+const cities = [
+  { label: "Pune (PNQ)", value: 1 },
+  { label: "Delhi (DEL)", value: 2 },
+  { label: "Bengaluru (BLR)", value: 3 },
+  { label: "Mumbai (BOM)", value: 4 },
+];
 const App = () => {
   const [inputValues, setInputValues] = useState({
     origin: "",
@@ -25,9 +32,11 @@ const App = () => {
     maxValue: 5000,
     minValue: 0,
   });
+
   const [activeTab, setActiveTab] = useState({ oneway: "true" });
-  const [formValues, setformValues] = useState({ hits: [] });
+  const [formValues, setformValues] = useState();
   const [formSubmit, setFormSubmit] = useState(false);
+  const [destinationcities, setDestinationCities] = useState();
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setInputValues({ ...inputValues, [name]: value });
@@ -68,7 +77,11 @@ const App = () => {
       maxValue: value.maxValue,
     });
   };
-
+  const handleselectchange = (selectedOption) => {
+    setDestinationCities({ ...cities });
+    let index = cities.indexOf(selectedOption);
+    cities.splice(index, 1);
+  };
   return (
     <Router>
       <div className="App">
@@ -92,19 +105,9 @@ const App = () => {
               </button>
 
               <form onSubmit={handlereturnSubmit} className="returnform">
-                <Inputfield
-                  name="origin"
-                  val={inputValues.origin}
-                  placeholder="Enter origin city"
-                  handleInputChange={handleInputChange}
-                />
+                <Select options={cities} onChange={handleselectchange} />
                 <br />
-                <Inputfield
-                  name="destination"
-                  val={inputValues.destination}
-                  handleInputChange={handleInputChange}
-                  placeholder="Enter destination city"
-                />
+                <Select options={cities} onChange={handleselectchange} />
                 <br />
                 <InputDate
                   name="departuredate"
