@@ -2,8 +2,10 @@ import "./App.css";
 import React from "react";
 import Tabs from "./component/search/tabs/tabs";
 import Tab from "./component/search/tabs/tab";
-import { useState } from "react";
-import Inputfield from "./common/inputfield";
+import { useState, useEffect } from "react";
+import Select from "react-select";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import InputDate from "./common/inputdate";
 import Inputpassenger from "./common/inputpassenger";
 import Searchresult from "./component/searchresult/index";
@@ -11,23 +13,30 @@ import Rangeslider from "./component/filter/rangeslider";
 import ReactDOM from "react-dom";
 import Favourite from "./component/favourite/favourite";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-//import { Router, Route, Link, browserHistory, IndexRoute } from "react-router";
-
+import _ from "lodash";
+const cities = [
+  { label: "Pune (PNQ)", value: 1 },
+  { label: "Delhi (DEL)", value: 2 },
+  { label: "Bengaluru (BLR)", value: 3 },
+  { label: "Mumbai (BOM)", value: 4 },
+];
 const App = () => {
   const [inputValues, setInputValues] = useState({
-    Origin: "",
-    Destination: "",
-    D_Date: "",
-    R_Date: "",
+    origin: "",
+    destination: "",
+    departuredate: "",
+    returndate: "",
     count: "",
   });
   const [Values, setValues] = useState({
-    maxValue: 10000,
+    maxValue: 5000,
     minValue: 0,
   });
-  const [formValues, setformValues] = useState({
-    submit: false,
-  });
+
+  const [activeTab, setActiveTab] = useState({ oneway: "true" });
+  const [formValues, setformValues] = useState();
+  const [formSubmit, setFormSubmit] = useState(false);
+  const [destinationcities, setDestinationCities] = useState();
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setInputValues({ ...inputValues, [name]: value });
@@ -37,8 +46,29 @@ const App = () => {
     const dateChanged = value.split("-").join("/");
     setInputValues({ ...inputValues, [name]: dateChanged });
   };
-  const handleSubmit = () => {
-    setformValues({ submit: true, ...inputValues });
+  const activeTabHandler = (btn) => {
+    const name = btn;
+    setActiveTab({ [name]: "true" });
+  };
+  const returnenabled = () => {
+    const {
+      origin,
+      destination,
+      departuredate,
+      returndate,
+      count,
+    } = inputValues;
+    const oneway =
+      !_.isEmpty(origin) &&
+      !_.isEmpty(destination) &&
+      !_.isEmpty(departuredate) &&
+      !_.isEmpty(count);
+    return activeTab.oneway ? oneway : oneway && !_.isEmpty(returndate);
+  };
+  const handlereturnSubmit = (event) => {
+    event.preventDefault();
+    setformValues({ ...inputValues });
+    setFormSubmit(true);
   };
   const pricechange = (value) => {
     setValues({
@@ -47,89 +77,80 @@ const App = () => {
       maxValue: value.maxValue,
     });
   };
+  const handleselectchange = (selectedOption) => {
+    setDestinationCities({ ...cities });
+    let index = cities.indexOf(selectedOption);
+    cities.splice(index, 1);
+  };
   return (
     <Router>
       <div className="App">
         <div className="header">
-          <h3>Flight Search App</h3>
+          <h2 className="filter">Flight Search App</h2>
         </div>
         <div className="flex-container">
           <aside className="search-sidebar">
             <div className="tabs">
-              <Tabs>
-                <Tab label="Oneway">
-                  <form onSubmit={handleSubmit} className="oneway">
-                    <Inputfield
-                      name="Origin"
-                      val={inputValues.Origin}
-                      placeholder="Enter origin city"
-                      handleInputChange={handleInputChange}
-                    />
-                    <br />
-                    <Inputfield
-                      name="Destination"
-                      val={inputValues.Destination}
-                      placeholder="Enter destination city"
-                      handleInputChange={handleInputChange}
-                    />
-                    <br />
-                    <InputDate
-                      name="D_Date"
-                      placeholder="Departure Date"
-                      handleChange={handleChange}
-                    />
-                    <br />
-                    <Inputpassenger
-                      name="count"
-                      placeholder="Number of passenger"
-                      handleInputChange={handleInputChange}
-                    />
-                    <br />
-                  </form>
-                </Tab>
-                <Tab label="Returnform">
-                  <form onSubmit={handleSubmit} className="returnform">
-                    <Inputfield
-                      name="Origin"
-                      val={inputValues.Origin}
-                      placeholder="Enter origin city"
-                      handleInputChange={handleInputChange}
-                    />
-                    <br />
-                    <Inputfield
-                      name="Destination"
-                      val={inputValues.Destination}
-                      handleInputChange={handleInputChange}
-                      placeholder="Enter destination city"
-                    />
-                    <br />
-                    <InputDate
-                      name="D_Date"
-                      placeholder="Departure Date"
-                      handleChange={handleChange}
-                    />
-                    <br />
-                    <InputDate
-                      name="R_Date"
-                      placeholder="Return Date"
-                      handleChange={handleChange}
-                    />
-                    <br />
-                    <Inputpassenger placeholder="Number of passenger" />
-                    <br />
-                  </form>
-                </Tab>
-              </Tabs>
+              <button
+                className={activeTab.oneway ? "active tab" : "tab false"}
+                onClick={() => activeTabHandler("oneway")}
+              >
+                Oneway
+              </button>
+              <button
+                className={activeTab.return ? "active tab" : "tab false"}
+                onClick={() => activeTabHandler("return")}
+              >
+                Return
+              </button>
+
+              <form onSubmit={handlereturnSubmit} className="returnform">
+                <Select options={cities} onChange={handleselectchange} />
+                <br />
+                <Select options={cities} onChange={handleselectchange} />
+                <br />
+                <InputDate
+                  name="departuredate"
+                  placeholder="Departure Date"
+                  handleChange={handleChange}
+                />
+                <br />
+                {activeTab.return ? (
+                  <InputDate
+                    name="returndate"
+                    placeholder="Return Date"
+                    handleChange={handleChange}
+                  />
+                ) : (
+                  ""
+                )}
+
+                <br />
+                <Inputpassenger
+                  name="count"
+                  handleInputChange={handleInputChange}
+                  placeholder="Number of passenger"
+                />
+
+                <button className="return" disabled={!returnenabled()}>
+                  Search
+                </button>
+              </form>
             </div>
+            <h4 className="filter">Price Filter</h4>
             <Rangeslider value={pricechange} />
-            <Link to="/favourite">Favourite</Link>
           </aside>
           <div className="content">
             <div>
-              <Searchresult data={inputValues} filtervalues={Values} />
+              {formSubmit ? (
+                <Searchresult data={formValues} filtervalues={Values} />
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
+        <Favourite />
       </div>
     </Router>
   );

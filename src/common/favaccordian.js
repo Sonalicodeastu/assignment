@@ -1,11 +1,12 @@
 import { useState } from "react";
-import logo from "../../images.png";
 import * as moment from "moment";
-const Accordion = ({ children, props, sdata }) => {
+const Favaccordion = ({ children, props, secondflightdata }) => {
   const [isOpen, setOpen] = useState(false);
+  let departuretime = moment(props.data.departureTime);
+  let arrivalTime = moment(secondflightdata.arrivalTime);
   let startTime = moment(props.data.departureTime, "hh:mm:ss");
-  let endTime = moment(sdata.arrivalTime, "hh:mm:ss");
-  let diff = endTime.diff(startTime, "hours");
+  let endTime = moment(secondflightdata.arrivalTime, "hh:mm:ss");
+  const diff = endTime.diff(startTime, "hours");
   let totalMinutes = endTime.diff(startTime, "minutes");
   let clearMinutes = totalMinutes % 60;
   const addtofavourite = () => {
@@ -38,8 +39,8 @@ const Accordion = ({ children, props, sdata }) => {
                 <div>{props.data.origin}</div>
               </div>
               <div className="borderbox">
-                <div>{sdata.arrivalTime}</div>
-                <div>{sdata.destination}</div>
+                <div>{secondflightdata.arrivalTime}</div>
+                <div>{secondflightdata.destination}</div>
               </div>
               <div className="borderbox">
                 <div>
@@ -48,14 +49,11 @@ const Accordion = ({ children, props, sdata }) => {
                 <div>total Duration</div>
               </div>
               <div className="borderbox">
-                <strong>Rs.{props.data.price + sdata.price}</strong>
+                <strong>Rs.{props.data.price + secondflightdata.price}</strong>
               </div>
               <div className="borderbox">
                 <button className="booking" onClick={clear}>
                   clear
-                </button>
-                <button className="favourite" onClick={addtofavourite}>
-                  Favourite
                 </button>
               </div>
             </div>
@@ -70,4 +68,4 @@ const Accordion = ({ children, props, sdata }) => {
     </div>
   );
 };
-export default Accordion;
+export default Favaccordion;
