@@ -1,4 +1,3 @@
-import logo from "../images.png";
 const Multisingle = (props) => {
   return (
     <div>

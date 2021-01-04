@@ -3,7 +3,7 @@ import React from "react";
 
 import { useState } from "react";
 import Select from "react-select";
-import "bootstrap/dist/css/bootstrap.min.css";
+//import "bootstrap/dist/css/bootstrap.min.css";
 import InputDate from "./common/inputdate";
 import Inputpassenger from "./common/inputpassenger";
 import Searchresult from "./component/searchresult/index";

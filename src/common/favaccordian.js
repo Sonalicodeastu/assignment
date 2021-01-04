@@ -2,8 +2,6 @@ import { useState } from "react";
 import * as moment from "moment";
 const Favaccordion = ({ children, props, secondflightdata }) => {
   const [isOpen, setOpen] = useState(false);
-  // let departuretime = moment(props.data.departureTime);
-  // let arrivalTime = moment(secondflightdata.arrivalTime);
   let startTime = moment(props.data.departureTime, "hh:mm:ss");
   let endTime = moment(secondflightdata.arrivalTime, "hh:mm:ss");
   const diff = endTime.diff(startTime, "hours");
