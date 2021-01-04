@@ -66,7 +66,7 @@ const Searchresult = (props) => {
         (v) =>
           v.destination.toLowerCase() === props.data.origin.toLowerCase() ||
           (v.origin.toLowerCase() === props.data.destination.toLowerCase() &&
-            v.date === props.data.returnDate)
+            v.date === props.data.returndate)
       ); //direct indirect all
       setreturnData(returnall);
       directreturn = returnall.filter(
@@ -186,7 +186,7 @@ const Searchresult = (props) => {
           <ul className="list-group flightrow">{renderflights()}</ul>
           <ul className="list-group flightrow">{rendermultiflights()}</ul>
         </div>
-        {props.data.r_Date ? (
+        {props.data.returndate ? (
           <div className="content-divide">
             <ul className="list-group flightrow">{renderreturnflights()}</ul>
             <ul className="list-group flightrow">

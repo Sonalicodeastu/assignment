@@ -2,19 +2,13 @@ import { useState } from "react";
 import * as moment from "moment";
 const Favaccordion = ({ children, props, secondflightdata }) => {
   const [isOpen, setOpen] = useState(false);
-  let departuretime = moment(props.data.departureTime);
-  let arrivalTime = moment(secondflightdata.arrivalTime);
+  // let departuretime = moment(props.data.departureTime);
+  // let arrivalTime = moment(secondflightdata.arrivalTime);
   let startTime = moment(props.data.departureTime, "hh:mm:ss");
   let endTime = moment(secondflightdata.arrivalTime, "hh:mm:ss");
   const diff = endTime.diff(startTime, "hours");
   let totalMinutes = endTime.diff(startTime, "minutes");
   let clearMinutes = totalMinutes % 60;
-  const addtofavourite = () => {
-    let newArray = JSON.parse(sessionStorage.getItem("fav"));
-    newArray = newArray ? newArray : [];
-    newArray = [...newArray, props];
-    sessionStorage.setItem("fav", JSON.stringify(newArray));
-  };
   const clear = () => {
     sessionStorage.clear();
   };

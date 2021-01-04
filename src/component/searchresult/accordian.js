@@ -1,5 +1,6 @@
 import { useState } from "react";
-import logo from "../../images.png";
+
+import logo from "../../flight.png";
 import * as moment from "moment";
 const Accordion = ({ children, props, sdata }) => {
   const [isOpen, setOpen] = useState(false);
@@ -18,11 +19,20 @@ const Accordion = ({ children, props, sdata }) => {
     sessionStorage.clear();
   };
   return (
-    <div>
-      {diff ? (
+    <div className="flightrow flex-container">
+      {diff > 0 ? (
         <div className="accordion-wrapper">
           <div className={`accordion-title ${isOpen ? "open" : ""}`}>
-            <div className="row flex-container">
+            <div className="flightrow flex-container">
+              <div className="borderbox">
+                <img
+                  className="flight"
+                  src={logo}
+                  alt="flight"
+                  height="60px"
+                  width="60px"
+                />
+              </div>
               <div className="borderbox">
                 <div>
                   <span>Multiple</span>

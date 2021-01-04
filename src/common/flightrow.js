@@ -11,7 +11,7 @@ const Flightrow = (props) => {
     sessionStorage.clear();
   };
   return (
-    <div className="row flex-container">
+    <div className="flightrow flex-container">
       <div className="row-border">
         <div className="borderbox">
           <img
