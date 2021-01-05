@@ -1,6 +1,12 @@
-import * as moment from "moment";
+import React, { useState } from "react";
+import iconImg from "../download.png";
+import DatePicker from "react-datepicker";
 const InputDate = (props) => {
+  const [startDate, setStartDate] = useState(new Date());
+  // const openDatepicker = () => _calendar.setOpen(true);
   return (
+    // <DatePicker placeholderText="Departure date" />
+
     <input
       className="input-style-date"
       type="date"

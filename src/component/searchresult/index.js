@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import _ from "lodash";
+import * as moment from "moment";
 import Flightrow from "../../common/flightrow";
 import Multirow from "../../common/multirow";
 const Searchresult = (props) => {
@@ -12,6 +13,7 @@ const Searchresult = (props) => {
   const [dreturnflight, setdirectreturnData] = useState({ hits: [] });
   const [freturnflight, setfirstreturnData] = useState({ hits: [] });
   const [sreturnflight, setsecondreturnData] = useState({ hits: [] });
+  const [multiLength, setMultiLength] = useState(0);
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
@@ -113,15 +115,28 @@ const Searchresult = (props) => {
   const rendermultiflights = () => {
     let secondf;
     let multitotal;
+    let startTime;
+    let endTime;
+    let diff;
+    let multilength = multiLength;
+
     return _.map(firstflight, (plane) => {
       secondf = _.find(secondflight, function (obj) {
         multitotal = obj.price + plane.price;
+        startTime = moment(plane.departureTime, "hh:mm:ss");
+        endTime = moment(obj.arrivalTime, "hh:mm:ss");
+        diff = endTime.diff(startTime, "hours");
         return obj.origin === plane.destination;
       });
+
       if (
         multitotal <= props.filtervalues.maxValue &&
-        multitotal >= props.filtervalues.minValue
+        multitotal >= props.filtervalues.minValue &&
+        diff > 0
       ) {
+        multilength++;
+        setMultiLength(multilength);
+        console.log(multiLength);
         return (
           <Multirow
             key={plane.flightNo + plane.origin}
@@ -162,18 +177,18 @@ const Searchresult = (props) => {
             {props.data.destination}
           </h3>
           <h5>
-            {data.length ? "flights found" : ""}{" "}
+            {data.length || multiLength ? data.length + " flights found" : ""}
             {props.data.departuredate ? props.data.departuredate : ""}
           </h5>
         </div>
-        {props.data.r_Date ? (
+        {props.data.returndate ? (
           <div className="right">
             <h3>
-              {props.data.destination} {props.data.destination ? "to" : ""}{" "}
+              {props.data.destination} {props.data.destination ? "to" : ""}
               {props.data.origin}
             </h3>
             <h5>
-              {returnflight.length ? "flights found" : ""}{" "}
+              {returnflight.length ? "flights found" : ""}
               {props.data.returndate ? props.data.returndate : ""}
             </h5>
           </div>
@@ -182,7 +197,7 @@ const Searchresult = (props) => {
         )}
       </div>
       <div class="resultcontent">
-        <div className={props.data.r_Date ? "content-divide" : ""}>
+        <div className={props.data.returndate ? "content-divide" : ""}>
           <ul className="list-group flightrow">{renderflights()}</ul>
           <ul className="list-group flightrow">{rendermultiflights()}</ul>
         </div>

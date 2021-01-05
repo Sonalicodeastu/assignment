@@ -9,7 +9,7 @@
 .search-sidebar {
   flex-grow: 3;
   border: 1px solid lightgray;
-  max-width: 420px;
+  max-width: 345px;
 }
 input.input-style {
   border: 0;
@@ -118,19 +118,28 @@ input.input-style-date :valid:before {
 .tabs {
   font-family: arial;
   margin: 10px auto;
-  width: 70%;
+  width: 90%;
   text-align: center;
 }
 .tab {
-  margin-right: 15px;
+  border: 2px solid #000;
   font-size: 16px;
   background: transparent;
   border: none;
   outline: none;
   padding: 10px 20px;
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.4);
+  color: #000;
   transition: all ease-in-out 0.2s;
+  border-radius: 5px 5px 0 0;
+}
+form.returnform {
+  padding: 10px;
+  border: 2px solid #000;
+}
+
+.css-yk16xz-control {
+  border: 2px solid #000 !important;
 }
 .active {
   color: #fff;

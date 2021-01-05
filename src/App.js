@@ -17,6 +17,13 @@ const cities = [
   { label: "Bengaluru (BLR)", value: 3 },
   { label: "Mumbai (BOM)", value: 4 },
 ];
+const countpassengers = [
+  { label: "1", value: 1 },
+  { label: "2", value: 2 },
+  { label: "3", value: 3 },
+  { label: "4", value: 4 },
+  { label: "5", value: 5 },
+];
 const App = () => {
   const [inputValues, setInputValues] = useState({
     origin: "",
@@ -33,9 +40,11 @@ const App = () => {
   const [formValues, setformValues] = useState();
   const [formSubmit, setFormSubmit] = useState(false);
   const [destinationcities, setDestinationCities] = useState();
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setInputValues({ ...inputValues, [name]: value });
+  const handleInputChange = (selectedValue, action) => {
+    const name = action.name;
+    // const { name } = action.name;
+    setInputValues({ ...inputValues, [name]: selectedValue.label });
+    console.log(inputValues);
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -130,10 +139,10 @@ const App = () => {
                   ""
                 )}
                 <br />
-                <Inputpassenger
+                <Select
                   name="count"
-                  handleInputChange={handleInputChange}
-                  placeholder="Number of passenger"
+                  options={countpassengers}
+                  onChange={handleInputChange}
                 />
                 <button className="return" disabled={!returnenabled()}>
                   Search
