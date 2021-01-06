@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-
+import * as moment from "moment";
 import { useState } from "react";
 import Select from "react-select";
 //import "bootstrap/dist/css/bootstrap.min.css";
@@ -42,14 +42,12 @@ const App = () => {
   const [destinationcities, setDestinationCities] = useState();
   const handleInputChange = (selectedValue, action) => {
     const name = action.name;
-    // const { name } = action.name;
     setInputValues({ ...inputValues, [name]: selectedValue.label });
     console.log(inputValues);
   };
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    const dateChanged = value.split("-").join("/");
-    setInputValues({ ...inputValues, [name]: dateChanged });
+  const handleChange = (name, startDate) => {
+    let datef = moment(startDate).format("YYYY/MM/DD");
+    setInputValues({ ...inputValues, [name]: datef });
   };
   const activeTabHandler = (btn) => {
     const name = btn;
@@ -95,7 +93,7 @@ const App = () => {
         <div className="header">
           <h2 className="filter">Flight Search App</h2>
         </div>
-        <div className="flex-container">
+        <div className="flex-container-whole">
           <aside className="search-sidebar">
             <div className="tabs">
               <button
@@ -130,15 +128,18 @@ const App = () => {
                 />
                 <br />
                 {activeTab.return ? (
-                  <InputDate
-                    name="returndate"
-                    placeholder="Return Date"
-                    handleChange={handleChange}
-                  />
+                  <div>
+                    <InputDate
+                      name="returndate"
+                      placeholder="Return Date"
+                      handleChange={handleChange}
+                    />
+                    <br />
+                  </div>
                 ) : (
                   ""
                 )}
-                <br />
+
                 <Select
                   name="count"
                   options={countpassengers}

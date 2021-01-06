@@ -1,7 +1,7 @@
 const Multisingle = (props) => {
   return (
-    <div>
-      <div className="border row flex-container">
+    <div className={props.firstflight ? "first-multi" : ""}>
+      <div className="flex-container">
         <div className="borderbox">
           <div>
             <span>{props.flight.name}</span>

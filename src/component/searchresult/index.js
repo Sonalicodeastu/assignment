@@ -4,6 +4,8 @@ import _ from "lodash";
 import * as moment from "moment";
 import Flightrow from "../../common/flightrow";
 import Multirow from "../../common/multirow";
+let flightlength = [];
+let returnflightlength = [];
 const Searchresult = (props) => {
   const [data, setData] = useState({ hits: [] });
   const [multidata, setmultiData] = useState({ hits: [] });
@@ -29,70 +31,78 @@ const Searchresult = (props) => {
       let firstreturn = {};
       let secondreturn = {};
       multiresult = result.data.filter(
-        (v) =>
-          v.destination.toLowerCase() ===
+        (flight) =>
+          flight.destination.toLowerCase() ===
             props.data.destination.toLowerCase() ||
-          v.origin.toLowerCase() === props.data.origin.toLowerCase()
+          flight.origin.toLowerCase() === props.data.origin.toLowerCase()
       ); //direct indirect all
       res = multiresult.filter(
-        (v) =>
-          v.destination.toLowerCase() ===
+        (flight) =>
+          flight.destination.toLowerCase() ===
             props.data.destination.toLowerCase() &&
-          v.origin.toLowerCase() === props.data.origin.toLowerCase() &&
-          v.date === props.data.departuredate &&
-          v.price <= props.filtervalues.maxValue &&
-          v.price >= props.filtervalues.minValue
+          flight.origin.toLowerCase() === props.data.origin.toLowerCase() &&
+          flight.date === props.data.departuredate &&
+          flight.price <= props.filtervalues.maxValue &&
+          flight.price >= props.filtervalues.minValue
       ); //direct flights
       multires = multiresult.filter(
-        (v) =>
-          v.destination.toLowerCase() ===
+        (flight) =>
+          flight.destination.toLowerCase() ===
             props.data.destination.toLowerCase() ||
-          (v.origin.toLowerCase() === props.data.origin.toLowerCase() &&
-            v.date === props.data.departuredate)
+          (flight.origin.toLowerCase() === props.data.origin.toLowerCase() &&
+            flight.date === props.data.departuredate)
       ); //all indirect
       first_m = multires.filter(
-        (v) =>
-          v.origin.toLowerCase() === props.data.origin.toLowerCase() &&
-          v.destination !== props.data.destination
+        (flight) =>
+          flight.origin.toLowerCase() === props.data.origin.toLowerCase() &&
+          flight.destination !== props.data.destination
       ); //first of multiflight
       second_m = multires.filter(
-        (v) =>
-          v.origin.toLowerCase() !== props.data.origin.toLowerCase() &&
-          v.destination.toLowerCase() === props.data.destination.toLowerCase()
+        (flight) =>
+          flight.origin.toLowerCase() !== props.data.origin.toLowerCase() &&
+          flight.destination.toLowerCase() ===
+            props.data.destination.toLowerCase()
       ); //second of multiflight
       setData(res);
       setmultiData(multires);
       setfirstmultiData(first_m);
       setsecondmultiData(second_m);
       returnall = result.data.filter(
-        (v) =>
-          v.destination.toLowerCase() === props.data.origin.toLowerCase() ||
-          (v.origin.toLowerCase() === props.data.destination.toLowerCase() &&
-            v.date === props.data.returndate)
+        (flight) =>
+          flight.destination.toLowerCase() ===
+            props.data.origin.toLowerCase() ||
+          (flight.origin.toLowerCase() ===
+            props.data.destination.toLowerCase() &&
+            flight.date === props.data.returndate)
       ); //direct indirect all
       setreturnData(returnall);
       directreturn = returnall.filter(
-        (v) =>
-          v.destination.toLowerCase() === props.data.origin.toLowerCase() &&
-          v.origin.toLowerCase() === props.data.destination.toLowerCase() &&
-          v.date === props.data.returndate &&
-          v.price <= props.filtervalues.maxValue &&
-          v.price >= props.filtervalues.minValue
+        (flight) =>
+          flight.destination.toLowerCase() ===
+            props.data.origin.toLowerCase() &&
+          flight.origin.toLowerCase() ===
+            props.data.destination.toLowerCase() &&
+          flight.date === props.data.returndate &&
+          flight.price <= props.filtervalues.maxValue &&
+          flight.price >= props.filtervalues.minValue
       ); //direct flights
       setdirectreturnData(directreturn);
       firstreturn = returnall.filter(
-        (v) =>
-          v.origin.toLowerCase() === props.data.destination.toLowerCase() &&
-          v.destination !== props.data.origin
+        (flight) =>
+          flight.origin.toLowerCase() ===
+            props.data.destination.toLowerCase() &&
+          flight.destination !== props.data.origin
       ); //first of multiflight return
       setfirstreturnData(firstreturn);
       secondreturn = returnall.filter(
-        (v) =>
-          v.origin.toLowerCase() !== props.data.destination.toLowerCase() &&
-          v.destination.toLowerCase() === props.data.origin.toLowerCase()
+        (flight) =>
+          flight.origin.toLowerCase() !==
+            props.data.destination.toLowerCase() &&
+          flight.destination.toLowerCase() === props.data.origin.toLowerCase()
       ); //second of multiflight return
       setsecondreturnData(secondreturn);
     };
+
     fetchData();
   }, [
     props.data.destination,
@@ -112,13 +122,14 @@ const Searchresult = (props) => {
       return <Flightrow key={plane.flightNo + plane.origin} data={plane} />;
     });
   };
+
   const rendermultiflights = () => {
     let secondf;
     let multitotal;
     let startTime;
     let endTime;
     let diff;
-    let multilength = multiLength;
+    let multilength = [];
 
     return _.map(firstflight, (plane) => {
       secondf = _.find(secondflight, function (obj) {
@@ -134,9 +145,12 @@ const Searchresult = (props) => {
         multitotal >= props.filtervalues.minValue &&
         diff > 0
       ) {
-        multilength++;
-        setMultiLength(multilength);
-        console.log(multiLength);
+        multilength.push({ ...secondf, key: plane.flightNo + plane.origin });
+        flightlength = Array.from(new Set(multilength.map((a) => a.key))).map(
+          (id) => {
+            return multilength.find((a) => a.key === id);
+          }
+        );
         return (
           <Multirow
             key={plane.flightNo + plane.origin}
@@ -149,15 +163,29 @@ const Searchresult = (props) => {
   };
   const renderreturnmultiflights = () => {
     let secondf, multitotal;
+    let startTime;
+    let endTime;
+    let diff;
+    let multilength = [];
     return _.map(freturnflight, (plane) => {
       secondf = _.find(sreturnflight, function (obj) {
         multitotal = obj.price + plane.price;
+        startTime = moment(plane.departureTime, "hh:mm:ss");
+        endTime = moment(obj.arrivalTime, "hh:mm:ss");
+        diff = endTime.diff(startTime, "hours");
         return obj.origin === plane.destination;
       });
       if (
         multitotal <= props.filtervalues.maxValue &&
-        multitotal >= props.filtervalues.minValue
+        multitotal >= props.filtervalues.minValue &&
+        diff > 0
       ) {
+        multilength.push({ ...secondf, key: plane.flightNo + plane.origin });
+        returnflightlength = Array.from(
+          new Set(multilength.map((a) => a.key))
+        ).map((id) => {
+          return multilength.find((a) => a.key === id);
+        });
         return (
           <Multirow
             key={plane.flightNo + plane.origin}
@@ -170,47 +198,57 @@ const Searchresult = (props) => {
   };
   return (
     <div>
-      <div className="result-header">
-        <div className="left">
-          <h3>
-            {props.data.origin} {props.data.origin ? "to" : ""}{" "}
-            {props.data.destination}
-          </h3>
-          <h5>
-            {data.length || multiLength ? data.length + " flights found" : ""}
-            {props.data.departuredate ? props.data.departuredate : ""}
-          </h5>
-        </div>
-        {props.data.returndate ? (
-          <div className="right">
-            <h3>
-              {props.data.destination} {props.data.destination ? "to" : ""}
-              {props.data.origin}
-            </h3>
-            <h5>
-              {returnflight.length ? "flights found" : ""}
-              {props.data.returndate ? props.data.returndate : ""}
-            </h5>
+      <div>
+        <div class="resultcontent">
+          <div className="left">
+            <div className="result-header">
+              <h3>
+                {props.data.origin} {props.data.origin ? "to" : ""}{" "}
+                {props.data.destination}
+              </h3>
+              <br />
+              <h5>
+                {data.length
+                  ? data.length + flightlength.length + " flights found for "
+                  : ""}
+                {props.data.departuredate ? props.data.departuredate : ""}
+              </h5>
+            </div>
+            <div className={props.data.returndate ? "content-divide" : ""}>
+              <ul className="list-group flightrow">{renderflights()}</ul>
+              <ul className="list-group flightrow">{rendermultiflights()}</ul>
+            </div>
           </div>
-        ) : (
-          ""
-        )}
-      </div>
-      <div class="resultcontent">
-        <div className={props.data.returndate ? "content-divide" : ""}>
-          <ul className="list-group flightrow">{renderflights()}</ul>
-          <ul className="list-group flightrow">{rendermultiflights()}</ul>
+          {props.data.returndate ? (
+            <div className="right">
+              <div className="result-header">
+                <h3>
+                  {props.data.destination} {props.data.destination ? "to" : ""}
+                  {props.data.origin}
+                </h3>
+                <br />
+                <h5>
+                  {returnflight.length
+                    ? dreturnflight.length +
+                      returnflightlength.length +
+                      " flights found for "
+                    : ""}
+                  {props.data.returndate ? props.data.returndate : ""}
+                </h5>
+              </div>
+              <div className="content-divide">
+                <ul className="list-group flightrow">
+                  {renderreturnflights()}
+                </ul>
+                <ul className="list-group flightrow">
+                  {renderreturnmultiflights()}
+                </ul>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
-        {props.data.returndate ? (
-          <div className="content-divide">
-            <ul className="list-group flightrow">{renderreturnflights()}</ul>
-            <ul className="list-group flightrow">
-              {renderreturnmultiflights()}
-            </ul>
-          </div>
-        ) : (
-          ""
-        )}
       </div>
     </div>
   );

@@ -7,9 +7,7 @@ const Flightrow = (props) => {
     sessionStorage.setItem("dfav", JSON.stringify(newArray));
     console.log(sessionStorage.getItem("dfav"));
   };
-  const clear = () => {
-    sessionStorage.clear();
-  };
+
   return (
     <div className="flightrow flex-container">
       <div className="row-border">
@@ -42,13 +40,10 @@ const Flightrow = (props) => {
           </div>
           <div>nonstop</div>
         </div>
-        <div className="borderbox">
+        <div className="borderbox price">
           <strong>Rs.{props.data.price}</strong>
         </div>
         <div className="borderbox">
-          <button className="booking" onClick={clear}>
-            clear
-          </button>
           <button className="favourite" onClick={favourite}>
             Favourite
           </button>
