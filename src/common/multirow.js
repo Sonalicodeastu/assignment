@@ -4,7 +4,6 @@ import * as moment from "moment";
 const Multirow = (props) => {
   let endTimefirstflight = moment(props.data.arrivalTime, "hh:mm:ss");
   let startTimesecondflight = moment(props.sdata.departureTime, "hh:mm:ss");
-  //let layovertime = endTimefirstflight.diff(startTimesecondflight, "hours");
   let layovertime = startTimesecondflight.diff(endTimefirstflight, "hours");
   var mins = moment
     .utc(
@@ -13,10 +12,6 @@ const Multirow = (props) => {
       )
     )
     .format("mm");
-  //let hours = parseInt(layovertime.asHours());
-
-  // duration in minutes
-  //let minutes = parseInt(layovertime.asMinutes()) % 60;
   return (
     <Accordion props={props} sdata={props.sdata}>
       <Multisingle flight={props.data} firstflight={true} />

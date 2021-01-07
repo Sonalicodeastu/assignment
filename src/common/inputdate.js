@@ -26,36 +26,20 @@ const CustomInput = React.forwardRef((props, ref) => {
 
 const InputDate = (props) => {
   const [startDate, setStartDate] = useState(new Date("2020-11-01"));
-  useEffect(() => {
-    // do something when startDate updates
-  }, [startDate]);
-  // const openDatepicker = () => _calendar.setOpen(true);
+  useEffect(() => {}, [startDate]);
   return (
     <DatePicker
       selected={startDate}
       placeholderText={props.placeholder}
       minDate={new Date("2020/11/01")}
       name={props.name}
-      //onChange={props.handleChange}
       onChange={(date) => {
         setStartDate(date);
       }}
       onCalendarClose={() => props.handleChange(props.name, startDate)}
-      //onCalendarClose={console.log(startDate)}
       dateFormat="yyyy/MM/dd"
       customInput={<CustomInput placeholder={props.placeholder} />}
     />
-
-    // <input
-    //   className="input-style-date"
-    //   type="date"
-    //   min="2020-11-1"
-    //   placeholder={props.placeholder}
-    //   name={props.name}
-    //   onChange={props.handleChange}
-    //   required
-    //   pattern="\d{4}-\d{2}-\d{2}"
-    // />
   );
 };
 export default InputDate;

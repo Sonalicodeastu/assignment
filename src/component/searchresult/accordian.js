@@ -23,7 +23,6 @@ const Accordion = ({ children, props, sdata }) => {
   };
   return (
     <div className="flightrow flex-container">
-      {/* //{diff > 0 ? ( */}
       <div className="accordion-wrapper">
         <div className={`accordion-title ${isOpen ? "open" : ""}`}>
           <div className="flightrow flex-container row-border">
@@ -78,9 +77,6 @@ const Accordion = ({ children, props, sdata }) => {
           <div className="accordion-content">{children}</div>
         </div>
       </div>
-      {/* ) : (
-        ""
-      )} */}
     </div>
   );
 };

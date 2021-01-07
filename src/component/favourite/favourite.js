@@ -8,7 +8,7 @@ let data;
 const Favourite = () => {
   useEffect(() => {}, [data]);
   const renderfavflights = () => {
-    data = JSON.parse(sessionStorage.getItem("dfav"));
+    data = JSON.parse(sessionStorage.getItem("directFourite"));
     return _.map(data, (plane) => {
       return (
         <Favdirectrow
@@ -19,7 +19,7 @@ const Favourite = () => {
     });
   };
   const renderfavmultiflights = () => {
-    let multi = JSON.parse(window.sessionStorage.getItem("fav"));
+    let multi = JSON.parse(window.sessionStorage.getItem("favourite"));
     return _.map(multi, (plane) => {
       return (
         <Favmulti

@@ -4,8 +4,7 @@ import _ from "lodash";
 import * as moment from "moment";
 import Flightrow from "../../common/flightrow";
 import Multirow from "../../common/multirow";
-let flightlength = [];
-let returnflightlength = [];
+
 const Searchresult = (props) => {
   const [data, setData] = useState({ hits: [] });
   const [multidata, setmultiData] = useState({ hits: [] });
@@ -15,7 +14,8 @@ const Searchresult = (props) => {
   const [dreturnflight, setdirectreturnData] = useState({ hits: [] });
   const [freturnflight, setfirstreturnData] = useState({ hits: [] });
   const [sreturnflight, setsecondreturnData] = useState({ hits: [] });
-  const [multiLength, setMultiLength] = useState(0);
+  let flightlength = [];
+  let returnflightlength = [];
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
@@ -153,7 +153,7 @@ const Searchresult = (props) => {
         );
         return (
           <Multirow
-            key={plane.flightNo + plane.origin}
+            key={plane.flightNo + "flight" + plane.origin}
             data={plane}
             sdata={secondf}
           />
@@ -188,7 +188,7 @@ const Searchresult = (props) => {
         });
         return (
           <Multirow
-            key={plane.flightNo + plane.origin}
+            key={plane.flightNo + "flight" + plane.origin}
             data={plane}
             sdata={secondf}
           />

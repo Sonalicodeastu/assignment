@@ -3,27 +3,14 @@ import React from "react";
 import * as moment from "moment";
 import { useState } from "react";
 import Select from "react-select";
-//import "bootstrap/dist/css/bootstrap.min.css";
 import InputDate from "./common/inputdate";
 import Inputpassenger from "./common/inputpassenger";
 import Searchresult from "./component/searchresult/index";
 import Rangeslider from "./component/filter/rangeslider";
 import Favourite from "./component/favourite/favourite";
+import { cities, countpassengers } from "./constants/state";
 import { BrowserRouter as Router } from "react-router-dom";
 import _ from "lodash";
-const cities = [
-  { label: "Pune (PNQ)", value: 1 },
-  { label: "Delhi (DEL)", value: 2 },
-  { label: "Bengaluru (BLR)", value: 3 },
-  { label: "Mumbai (BOM)", value: 4 },
-];
-const countpassengers = [
-  { label: "1", value: 1 },
-  { label: "2", value: 2 },
-  { label: "3", value: 3 },
-  { label: "4", value: 4 },
-  { label: "5", value: 5 },
-];
 const App = () => {
   const [inputValues, setInputValues] = useState({
     origin: "",

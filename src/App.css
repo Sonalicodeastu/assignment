@@ -94,7 +94,7 @@ img.flight {
 .first-multi {
   border-bottom: 1px dotted;
 }
-span.layover-text {
+.layover-text {
   display: block;
   background: #fff;
   margin-top: -10px;
@@ -105,22 +105,12 @@ span.layover-text {
 .date-border {
   border: 2px solid #000;
   border-radius: 5px;
-  /* width: 100%; */
   margin: 0 10px 20px 10px;
   padding: 5px;
 }
 input.input-style-date {
   border: 0;
   width: 48%;
-  /* border-bottom: 2px solid #9fb4c7;
-  outline: none;
-  padding: 15px 0;
-  display: block;
-  font-size: 18px;
-  font-family: "Muli", sans-serif;
-  width: 100%;
-  transition: 0.1s ease-in;
-  margin: 5px; */
 }
 input.input-style-date:before {
   content: attr(placeholder);
@@ -136,7 +126,6 @@ input.input-style-date :valid:before {
 }
 .flex-container {
   display: flex;
-  /* margin: 3px; */
 }
 .flex-container .borderbox {
   padding: 8px;
@@ -210,21 +199,6 @@ body {
   max-height: 0;
   transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
 }
-/* .accordion-title {
-  font-weight: 600;
-  cursor: pointer;
-  color: #666;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-} */
-/* .accordion-title::after {
-  content: "";
-  width: 0;
-  height: 0;
-  border: 5px solid transparent;
-} */
 .accordion-title:hover,
 .accordion-title.open {
   color: black;
@@ -235,18 +209,8 @@ body {
 .duration {
   color: green;
 }
-/* .accordion-title.open::after {
-  content: "";
-  border-top: 0;
-  border-bottom: 5px solid;
-} */
-/* .accordion-content {
-  padding: 1em 1.5em;
-} */
 .accordion-wrapper {
-  /* width: 100%; */
   border-radius: 3px;
-  /* margin: 5px; */
   box-shadow: 2px 2px 2px 2px lightgrey;
 }
 .row-border {
@@ -371,4 +335,7 @@ body {
     width: 20%;
     font-size: 13px;
   }
+}
+.first-row {
+  display: flex;
 }
