@@ -351,4 +351,19 @@ body {
   .flex-container-whole {
     flex-direction: column;
   }
+  .content {
+    flex-grow: 10;
+    border: 1px solid lightgray;
+  }
+  .first-row {
+    display: flex;
+  }
+  .row-border {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 2px 2px lightgrey;
+  }
 }

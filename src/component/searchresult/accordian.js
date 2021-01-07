@@ -26,47 +26,51 @@ const Accordion = ({ children, props, sdata }) => {
       {/* //{diff > 0 ? ( */}
       <div className="accordion-wrapper">
         <div className={`accordion-title ${isOpen ? "open" : ""}`}>
-          <div className="flightrow flex-container">
-            <div className="borderbox">
-              <img
-                className="flight"
-                src={logo}
-                alt="flight"
-                height="60px"
-                width="60px"
-              />
-            </div>
-            <div className="borderbox">
-              <div>
-                <span>Multiple</span>
+          <div className="flightrow flex-container row-border">
+            <div className="first-row">
+              <div className="borderbox">
+                <img
+                  className="flight"
+                  src={logo}
+                  alt="flight"
+                  height="60px"
+                  width="60px"
+                />
               </div>
-              <div>
-                <a href="#" onClick={() => setOpen(!isOpen)}>
-                  Show details
-                </a>
+              <div className="borderbox">
+                <div>
+                  <span>Multiple</span>
+                </div>
+                <div>
+                  <a href="#" onClick={() => setOpen(!isOpen)}>
+                    Show details
+                  </a>
+                </div>
+              </div>
+              <div className="borderbox">
+                <div>{props.data.departureTime}</div>
+                <div>{props.data.origin}</div>
+              </div>
+              <div className="borderbox">
+                <div>{sdata.arrivalTime}</div>
+                <div>{sdata.destination}</div>
               </div>
             </div>
-            <div className="borderbox">
-              <div>{props.data.departureTime}</div>
-              <div>{props.data.origin}</div>
-            </div>
-            <div className="borderbox">
-              <div>{sdata.arrivalTime}</div>
-              <div>{sdata.destination}</div>
-            </div>
-            <div className="borderbox">
-              <div className="duration">
-                {diff} hr {clearMinutes} min
+            <div className="first-row">
+              <div className="borderbox">
+                <div className="duration">
+                  {diff} hr {clearMinutes} min
+                </div>
+                <div>total Duration</div>
               </div>
-              <div>total Duration</div>
-            </div>
-            <div className="borderbox price">
-              <strong>Rs.{props.data.price + sdata.price}</strong>
-            </div>
-            <div className="borderbox">
-              <button className="favourite" onClick={addtofavourite}>
-                Favourite
-              </button>
+              <div className="borderbox price">
+                <strong>Rs.{props.data.price + sdata.price}</strong>
+              </div>
+              <div className="borderbox">
+                <button className="favourite" onClick={addtofavourite}>
+                  Favourite
+                </button>
+              </div>
             </div>
           </div>
         </div>
