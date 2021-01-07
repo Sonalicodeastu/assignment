@@ -366,4 +366,9 @@ body {
     border-radius: 3px;
     box-shadow: 2px 2px 2px 2px lightgrey;
   }
+  .flex-container .borderbox {
+    padding: 8px;
+    width: 20%;
+    font-size: 13px;
+  }
 }
