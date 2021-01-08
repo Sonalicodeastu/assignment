@@ -4,13 +4,18 @@ import * as moment from "moment";
 import { useState } from "react";
 import Select from "react-select";
 import InputDate from "./common/inputdate";
-import Inputpassenger from "./common/inputpassenger";
 import Searchresult from "./component/searchresult/index";
 import Rangeslider from "./component/filter/rangeslider";
 import Favourite from "./component/favourite/favourite";
-import { cities, countpassengers } from "./constants/state";
+import { COUNTPASSENGERS } from "./constants/state";
 import { BrowserRouter as Router } from "react-router-dom";
 import _ from "lodash";
+let cities = [
+  { label: "Pune (PNQ)", value: 1 },
+  { label: "Delhi (DEL)", value: 2 },
+  { label: "Bengaluru (BLR)", value: 3 },
+  { label: "Mumbai (BOM)", value: 4 },
+];
 const App = () => {
   const [inputValues, setInputValues] = useState({
     origin: "",
@@ -26,11 +31,10 @@ const App = () => {
   const [activeTab, setActiveTab] = useState({ oneway: "true" });
   const [formValues, setformValues] = useState();
   const [formSubmit, setFormSubmit] = useState(false);
-  const [destinationcities, setDestinationCities] = useState();
+
   const handleInputChange = (selectedValue, action) => {
     const name = action.name;
     setInputValues({ ...inputValues, [name]: selectedValue.label });
-    console.log(inputValues);
   };
   const handleChange = (name, startDate) => {
     let datef = moment(startDate).format("YYYY/MM/DD");
@@ -70,9 +74,6 @@ const App = () => {
   const handleselectchange = (selectedOption, action) => {
     const name = action.name;
     setInputValues({ ...inputValues, [name]: selectedOption.label });
-    setDestinationCities({ ...cities });
-    let index = cities.indexOf(selectedOption);
-    cities.splice(index, 1);
   };
   return (
     <Router>
@@ -129,7 +130,7 @@ const App = () => {
 
                 <Select
                   name="count"
-                  options={countpassengers}
+                  options={COUNTPASSENGERS}
                   onChange={handleInputChange}
                 />
                 <button className="return" disabled={!returnenabled()}>

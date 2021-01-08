@@ -4,22 +4,21 @@ import logo from "../../flight.png";
 import * as moment from "moment";
 const Accordion = ({ children, props, sdata }) => {
   const [isOpen, setOpen] = useState(false);
+  const [favouriteState, setFavouriteState] = useState(false);
   let startTime = moment(props.data.departureTime, "hh:mm:ss");
-  let endTimefirstflight = moment(props.data.arrivalTime, "hh:mm:ss");
-  let startTimesecondflight = moment(sdata.departureTime, "hh:mm:ss");
   let endTime = moment(sdata.arrivalTime, "hh:mm:ss");
-  let layovertime = endTimefirstflight.diff(startTimesecondflight, "hours");
   let diff = endTime.diff(startTime, "hours");
   let totalMinutes = endTime.diff(startTime, "minutes");
   let clearMinutes = totalMinutes % 60;
   const addtofavourite = () => {
-    let newArray = JSON.parse(sessionStorage.getItem("fav"));
+    let newArray = JSON.parse(sessionStorage.getItem("favourite"));
     newArray = newArray ? newArray : [];
     newArray = [...newArray, props];
-    sessionStorage.setItem("fav", JSON.stringify(newArray));
+    sessionStorage.setItem("favourite", JSON.stringify(newArray));
+    setFavouriteState(true);
   };
-  const clear = () => {
-    sessionStorage.clear();
+  const returnenabled = () => {
+    return favouriteState;
   };
   return (
     <div className="flightrow flex-container">
@@ -41,9 +40,12 @@ const Accordion = ({ children, props, sdata }) => {
                   <span>Multiple</span>
                 </div>
                 <div>
-                  <a href="#" onClick={() => setOpen(!isOpen)}>
-                    Show details
-                  </a>
+                  <span
+                    className="expand-flight"
+                    onClick={() => setOpen(!isOpen)}
+                  >
+                    {!isOpen ? "Show details" : "Hide Details"}
+                  </span>
                 </div>
               </div>
               <div className="borderbox">
@@ -66,7 +68,11 @@ const Accordion = ({ children, props, sdata }) => {
                 <strong>Rs.{props.data.price + sdata.price}</strong>
               </div>
               <div className="borderbox">
-                <button className="favourite" onClick={addtofavourite}>
+                <button
+                  className="favourite"
+                  onClick={addtofavourite}
+                  disabled={returnenabled()}
+                >
                   Favourite
                 </button>
               </div>

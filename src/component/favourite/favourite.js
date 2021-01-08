@@ -1,14 +1,10 @@
 import _ from "lodash";
-import { Component } from "react";
-import { useState, useEffect } from "react";
 import Favdirectrow from "../../common/favdirectrow";
 import Favmulti from "../../common/favmulti";
-import { Link } from "react-router-dom";
 let data;
 const Favourite = () => {
-  useEffect(() => {}, [data]);
   const renderfavflights = () => {
-    data = JSON.parse(sessionStorage.getItem("directFourite"));
+    data = JSON.parse(sessionStorage.getItem("directfavourite"));
     return _.map(data, (plane) => {
       return (
         <Favdirectrow

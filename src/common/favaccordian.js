@@ -1,9 +1,10 @@
 import { useState } from "react";
 import * as moment from "moment";
-const Favaccordion = ({ children, props, secondflightdata }) => {
+const Favaccordion = ({ children, props, sdata }) => {
   const [isOpen, setOpen] = useState(false);
+  console.log(sdata);
   let startTime = moment(props.data.departureTime, "hh:mm:ss");
-  let endTime = moment(secondflightdata.arrivalTime, "hh:mm:ss");
+  let endTime = moment(sdata.arrivalTime, "hh:mm:ss");
   const diff = endTime.diff(startTime, "hours");
   let totalMinutes = endTime.diff(startTime, "minutes");
   let clearMinutes = totalMinutes % 60;
@@ -21,9 +22,7 @@ const Favaccordion = ({ children, props, secondflightdata }) => {
                   <span>Multiple</span>
                 </div>
                 <div>
-                  <a href="#" onClick={() => setOpen(!isOpen)}>
-                    Show details
-                  </a>
+                  <span onClick={() => setOpen(!isOpen)}>Show details</span>
                 </div>
               </div>
               <div className="borderbox">
@@ -31,8 +30,8 @@ const Favaccordion = ({ children, props, secondflightdata }) => {
                 <div>{props.data.origin}</div>
               </div>
               <div className="borderbox">
-                <div>{secondflightdata.arrivalTime}</div>
-                <div>{secondflightdata.destination}</div>
+                <div>{sdata.arrivalTime}</div>
+                <div>{sdata.destination}</div>
               </div>
               <div className="borderbox">
                 <div>
@@ -41,7 +40,7 @@ const Favaccordion = ({ children, props, secondflightdata }) => {
                 <div>total Duration</div>
               </div>
               <div className="borderbox">
-                <strong>Rs.{props.data.price + secondflightdata.price}</strong>
+                <strong>Rs.{props.data.price + sdata.price}</strong>
               </div>
               <div className="borderbox">
                 <button className="booking" onClick={clear}>

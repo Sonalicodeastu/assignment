@@ -129,7 +129,7 @@ input.input-style-date :valid:before {
 }
 .flex-container .borderbox {
   padding: 8px;
-  width: 14%;
+  width: 21%;
   font-size: 13px;
 }
 .tabs {
@@ -321,6 +321,9 @@ body {
   }
   .first-row {
     display: flex;
+  }
+  span.expand-flight {
+    color: blue;
   }
   .row-border {
     display: flex;

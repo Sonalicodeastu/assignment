@@ -4,18 +4,17 @@ import _ from "lodash";
 import * as moment from "moment";
 import Flightrow from "../../common/flightrow";
 import Multirow from "../../common/multirow";
-
+let flightlength = [];
+let returnflightlength = [];
 const Searchresult = (props) => {
   const [data, setData] = useState({ hits: [] });
-  const [multidata, setmultiData] = useState({ hits: [] });
   const [firstflight, setfirstmultiData] = useState({ hits: [] });
   const [secondflight, setsecondmultiData] = useState({ hits: [] });
   const [returnflight, setreturnData] = useState({ hits: [] });
   const [dreturnflight, setdirectreturnData] = useState({ hits: [] });
   const [freturnflight, setfirstreturnData] = useState({ hits: [] });
   const [sreturnflight, setsecondreturnData] = useState({ hits: [] });
-  let flightlength = [];
-  let returnflightlength = [];
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
@@ -64,7 +63,7 @@ const Searchresult = (props) => {
             props.data.destination.toLowerCase()
       ); //second of multiflight
       setData(res);
-      setmultiData(multires);
+      //setmultiData(multires);
       setfirstmultiData(first_m);
       setsecondmultiData(second_m);
       returnall = result.data.filter(
@@ -145,7 +144,10 @@ const Searchresult = (props) => {
         multitotal >= props.filtervalues.minValue &&
         diff > 0
       ) {
-        multilength.push({ ...secondf, key: plane.flightNo + plane.origin });
+        multilength.push({
+          ...secondf,
+          key: plane.flightNo + "flight" + plane.origin,
+        });
         flightlength = Array.from(new Set(multilength.map((a) => a.key))).map(
           (id) => {
             return multilength.find((a) => a.key === id);
@@ -180,7 +182,10 @@ const Searchresult = (props) => {
         multitotal >= props.filtervalues.minValue &&
         diff > 0
       ) {
-        multilength.push({ ...secondf, key: plane.flightNo + plane.origin });
+        multilength.push({
+          ...secondf,
+          key: plane.flightNo + "flight" + plane.origin,
+        });
         returnflightlength = Array.from(
           new Set(multilength.map((a) => a.key))
         ).map((id) => {

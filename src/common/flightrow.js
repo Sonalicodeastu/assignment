@@ -1,13 +1,17 @@
+import { useState } from "react";
 import logo from "../flight.png";
 const Flightrow = (props) => {
+  const [favouriteState, setFavouriteState] = useState(false);
   const favourite = () => {
-    let newArray = JSON.parse(sessionStorage.getItem("dfav"));
+    let newArray = JSON.parse(sessionStorage.getItem("directfavourite"));
     newArray = newArray ? newArray : [];
     newArray = [...newArray, props];
-    sessionStorage.setItem("dfav", JSON.stringify(newArray));
-    console.log(sessionStorage.getItem("dfav"));
+    sessionStorage.setItem("directfavourite", JSON.stringify(newArray));
+    setFavouriteState(true);
   };
-
+  const returnenabled = () => {
+    return favouriteState;
+  };
   return (
     <div className="flightrow flex-container">
       <div className="row-border">
@@ -47,7 +51,11 @@ const Flightrow = (props) => {
             <strong>Rs.{props.data.price}</strong>
           </div>
           <div className="borderbox">
-            <button className="favourite" onClick={favourite}>
+            <button
+              className="favourite"
+              onClick={favourite}
+              disabled={returnenabled()}
+            >
               Favourite
             </button>
           </div>

@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 import iconImg from "../download.png";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import styled from "styled-components";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-
 const CustomInput = React.forwardRef((props, ref) => {
   return (
     <div className="date-border">
@@ -19,7 +15,7 @@ const CustomInput = React.forwardRef((props, ref) => {
         onClick={props.onClick}
         value={props.value}
       />
-      <img src={iconImg} onClick={props.onClick} />
+      <img src={iconImg} onClick={props.onClick} alt="calender" />
     </div>
   );
 });
@@ -43,9 +39,3 @@ const InputDate = (props) => {
   );
 };
 export default InputDate;
-const CustomDatePickDiv = styled.div`
-  background-color: white;
-  border: solid 0.1em #cbd4c9;
-  border-radius: 0.25em;
-  padding: 0.3em 1.6em 0 1.6em;
-`;
