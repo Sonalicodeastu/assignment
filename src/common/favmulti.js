@@ -1,4 +1,3 @@
-import logo from "../images.png";
 import Favaccordion from "../common/favaccordian";
 import Multisingle from "../common/multisingle";
 const Favmulti = (props) => {

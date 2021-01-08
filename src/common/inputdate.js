@@ -1,17 +1,40 @@
-import * as moment from "moment";
-const InputDate = (props) => {
-  let todaydate = new Date();
-  let today = moment(todaydate).format("YYYY-MM-DD");
+import React, { useState, useEffect } from "react";
+import iconImg from "../download.png";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+const CustomInput = React.forwardRef((props, ref) => {
   return (
-    <input
-      className="input-style-date"
-      type="date"
-      min={today}
-      placeholder={props.placeholder}
+    <div className="date-border">
+      <label onClick={props.onClick} ref={ref}>
+        {props.placeholder}
+      </label>
+      <input
+        className="input-style-date"
+        type="text"
+        placeholder={props.placeholder}
+        onClick={props.onClick}
+        value={props.value}
+      />
+      <img src={iconImg} onClick={props.onClick} alt="calender" />
+    </div>
+  );
+});
+
+const InputDate = (props) => {
+  const [startDate, setStartDate] = useState(new Date("2020-11-01"));
+  useEffect(() => {}, [startDate]);
+  return (
+    <DatePicker
+      selected={startDate}
+      placeholderText={props.placeholder}
+      minDate={new Date("2020/11/01")}
       name={props.name}
-      onChange={props.handleChange}
-      required
-      pattern="\d{4}-\d{2}-\d{2}"
+      onChange={(date) => {
+        setStartDate(date);
+      }}
+      onCalendarClose={() => props.handleChange(props.name, startDate)}
+      dateFormat="yyyy/MM/dd"
+      customInput={<CustomInput placeholder={props.placeholder} />}
     />
   );
 };
