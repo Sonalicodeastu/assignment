@@ -9,8 +9,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/" exact component={App} />
-      <Route path="/favourite" component={Favourite} />
+      <Route exact path="/" component={App}></Route>
+      <Route path="/favourite" component={Favourite}></Route>
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")

@@ -8,8 +8,20 @@ import Searchresult from "./component/searchresult/index";
 import Rangeslider from "./component/filter/rangeslider";
 import Favourite from "./component/favourite/favourite";
 import { COUNTPASSENGERS } from "./constants/state";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, NavLink } from "react-router-dom";
 import _ from "lodash";
+let origin = [
+  { label: "Pune (PNQ)", value: 1 },
+  { label: "Delhi (DEL)", value: 2 },
+  { label: "Bengaluru (BLR)", value: 3 },
+  { label: "Mumbai (BOM)", value: 4 },
+];
+let destination = [
+  { label: "Pune (PNQ)", value: 1 },
+  { label: "Delhi (DEL)", value: 2 },
+  { label: "Bengaluru (BLR)", value: 3 },
+  { label: "Mumbai (BOM)", value: 4 },
+];
 let cities = [
   { label: "Pune (PNQ)", value: 1 },
   { label: "Delhi (DEL)", value: 2 },
@@ -43,6 +55,7 @@ const App = () => {
   const activeTabHandler = (btn) => {
     const name = btn;
     setActiveTab({ [name]: "true" });
+    setFormSubmit(false);
   };
   const returnenabled = () => {
     const {
@@ -73,87 +86,99 @@ const App = () => {
   };
   const handleselectchange = (selectedOption, action) => {
     const name = action.name;
-    setInputValues({ ...inputValues, [name]: selectedOption.label });
+    if (name === "origin") {
+      setInputValues({ ...inputValues, [name]: selectedOption.label });
+      destination = [...cities];
+      let index = destination.findIndex(
+        (x) => x.label === selectedOption.label
+      );
+      destination.splice(index, 1);
+    } else {
+      setInputValues({ ...inputValues, [name]: selectedOption.label });
+      origin = [...cities];
+      let index = origin.findIndex((x) => x.label === selectedOption.label);
+      origin.splice(index, 1);
+    }
   };
-  return (
-    <Router>
-      <div className="App">
-        <div className="header">
-          <h2 className="filter">Flight Search App</h2>
-        </div>
-        <div className="flex-container-whole">
-          <aside className="search-sidebar">
-            <div className="tabs">
-              <button
-                className={activeTab.oneway ? "active tab" : "tab false"}
-                onClick={() => activeTabHandler("oneway")}
-              >
-                Oneway
-              </button>
-              <button
-                className={activeTab.return ? "active tab" : "tab false"}
-                onClick={() => activeTabHandler("return")}
-              >
-                Return
-              </button>
-              <form onSubmit={handlereturnSubmit} className="returnform">
-                <Select
-                  name="origin"
-                  options={cities}
-                  onChange={handleselectchange}
-                />
-                <br />
-                <Select
-                  name="destination"
-                  options={cities}
-                  onChange={handleselectchange}
-                />
-                <br />
-                <InputDate
-                  name="departuredate"
-                  placeholder="Departure Date"
-                  handleChange={handleChange}
-                />
-                <br />
-                {activeTab.return ? (
-                  <div>
-                    <InputDate
-                      name="returndate"
-                      placeholder="Return Date"
-                      handleChange={handleChange}
-                    />
-                    <br />
-                  </div>
-                ) : (
-                  ""
-                )}
 
-                <Select
-                  name="count"
-                  options={COUNTPASSENGERS}
-                  onChange={handleInputChange}
-                />
-                <button className="return" disabled={!returnenabled()}>
-                  Search
-                </button>
-              </form>
-            </div>
-            <h4 className="filter">Price Filter</h4>
-            <Rangeslider value={pricechange} />
-          </aside>
-          <div className="content">
-            <div>
-              {formSubmit ? (
-                <Searchresult data={formValues} filtervalues={Values} />
+  return (
+    <div className="App">
+      <div className="header">
+        <h2 className="filter">Flight Search App</h2>
+      </div>
+      <div className="flex-container-whole">
+        <aside className="search-sidebar">
+          <div className="tabs">
+            <button
+              className={activeTab.oneway ? "active tab" : "tab false"}
+              onClick={() => activeTabHandler("oneway")}
+            >
+              Oneway
+            </button>
+            <button
+              className={activeTab.return ? "active tab" : "tab false"}
+              onClick={() => activeTabHandler("return")}
+            >
+              Return
+            </button>
+            <form onSubmit={handlereturnSubmit} className="returnform">
+              <Select
+                name="origin"
+                options={origin}
+                onChange={handleselectchange}
+              />
+              <br />
+              <Select
+                name="destination"
+                options={destination}
+                onChange={handleselectchange}
+              />
+              <br />
+              <InputDate
+                name="departuredate"
+                placeholder="Departure Date"
+                handleChange={handleChange}
+              />
+              <br />
+              {activeTab.return ? (
+                <div>
+                  <InputDate
+                    name="returndate"
+                    placeholder="Return Date"
+                    handleChange={handleChange}
+                  />
+                  <br />
+                </div>
               ) : (
                 ""
               )}
-            </div>
+
+              <Select
+                name="count"
+                options={COUNTPASSENGERS}
+                onChange={handleInputChange}
+              />
+              <button className="return" disabled={!returnenabled()}>
+                Search
+              </button>
+            </form>
+          </div>
+          <h4 className="filter">Price Filter</h4>
+          <Rangeslider value={pricechange} />
+          <NavLink to="/favourite">Favourite</NavLink>
+        </aside>
+        <div className="content">
+          <div>
+            {formSubmit ? (
+              <Searchresult data={formValues} filtervalues={Values} />
+            ) : (
+              ""
+            )}
           </div>
         </div>
-        <Favourite />
       </div>
-    </Router>
+      {/* <Favourite /> */}
+    </div>
   );
 };
 export default App;

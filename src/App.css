@@ -132,6 +132,9 @@ input.input-style-date :valid:before {
   width: 21%;
   font-size: 13px;
 }
+.expand-flight {
+  color: blue;
+}
 .tabs {
   font-family: arial;
   margin: 10px auto;

@@ -1,7 +1,16 @@
 import { useState } from "react";
 import logo from "../flight.png";
+import * as moment from "moment";
 const Flightrow = (props) => {
   const [favouriteState, setFavouriteState] = useState(false);
+  console.log(props);
+  let startFlight = moment(props.data.arrivalTime, "hh:mm:ss");
+  let endFlight = moment(props.data.departureTime, "hh:mm:ss");
+  let time = startFlight.diff(endFlight, "hours");
+  var mins = moment
+    .utc(moment(endFlight, "HH:mm:ss").diff(moment(startFlight, "HH:mm:ss")))
+    .format("mm");
+
   const favourite = () => {
     let newArray = JSON.parse(sessionStorage.getItem("directfavourite"));
     newArray = newArray ? newArray : [];
@@ -41,9 +50,7 @@ const Flightrow = (props) => {
         <div className="first-row">
           <div className="borderbox">
             <div>
-              {parseInt(props.data.arrivalTime) -
-                parseInt(props.data.departureTime)}
-              hrs
+              {time} hrs {60 - mins === 60 ? 0 : 60 - mins} minutes
             </div>
             <div>nonstop</div>
           </div>

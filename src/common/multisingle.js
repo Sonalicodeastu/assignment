@@ -1,6 +1,5 @@
 import * as moment from "moment";
 const Multisingle = (props) => {
-  console.log(props);
   let endTimefirstflight = moment(props.flight.arrivalTime, "hh:mm:ss");
   let startTimesecondflight = moment(props.flight.departureTime, "hh:mm:ss");
   let layovertime = endTimefirstflight.diff(startTimesecondflight, "hours");
